@@ -27,9 +27,7 @@
 
 package scalafx.scene.shape
 
-import javafx.scene.paint.Paint
-import scalafx.scene.Node
-import scalafx.beans.property.{ObjectProperty, DoubleProperty}
+import scalafx.beans.property.DoubleProperty
 
 class Rectangle extends Shape {
   val rectangle = new javafx.scene.shape.Rectangle()
@@ -58,5 +56,16 @@ class Rectangle extends Shape {
   def height_=(v:Double) {
     height() = v
   }
-  
+
+  private[this] lazy val _arcWidthProperty = new DoubleProperty(rectangle.arcWidthProperty())
+  def arcWidth = _arcWidthProperty
+  def arcWidth_=(v:Double) {
+    arcWidth() = v
+  }
+
+  private[this] lazy val _arcHeightProperty = new DoubleProperty(rectangle.arcHeightProperty())
+  def arcHeight = _arcHeightProperty
+  def arcHeight_=(v:Double) {
+    arcHeight() = v
+  }
 }
