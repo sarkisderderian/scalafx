@@ -25,51 +25,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.layout
+package scalafx.scene.text
 
-import javafx.{geometry => jfxg}
-import javafx.scene.{layout => jfxsl}
-import scalafx.Includes._
+import scala.collection.JavaConversions._
+
+import javafx.scene.{text => jfxst}
+import javafx.scene.text.{FontWeight, FontPosture}
 import scalafx.util.SFXDelegate
 
-object RowConstraints {
-  implicit def sfxRowConstraints2jfx(v: RowConstraints) = v.delegate
+object Font {
+  implicit def sfxFont2jfx(v: Font) = v.delegate
+
+  def	default = jfxst.Font.getDefault
+
+  def families = jfxst.Font.getFamilies.toSeq
+
+  def	font(family: String, size: Double) = jfxst.Font.font(family, size)
+  def	font(family: String, posture: FontPosture, size: Double) = jfxst.Font.font(family, posture, size)
+  def	font(family: String, weight: FontWeight, size: Double) = jfxst.Font.font(family, weight, size)
+  def	font(family: String, weight: FontWeight, posture: FontPosture, size: Double) = jfxst.Font.font(family, weight, posture, size)
+
+  def fontNames = jfxst.Font.getFontNames.toSeq
+  def fontNames(family: String) = jfxst.Font.getFontNames(family).toSeq
+
+  def	loadFont(in: java.io.InputStream, size: Double) = jfxst.Font.loadFont(in, size)
+  def	loadFont(urlStr: String, size: Double) = jfxst.Font.loadFont(urlStr, size)
 }
 
-class RowConstraints(override val delegate:jfxsl.RowConstraints = new jfxsl.RowConstraints()) extends ConstraintsBase(delegate) with SFXDelegate[jfxsl.RowConstraints] {
+class Font(val delegate: jfxst.Font) extends SFXDelegate[jfxst.Font]{
 
-  def fillHeight = delegate.fillHeightProperty
-  def fillHeight_= (v: Boolean) {
-    fillHeight() = v
-  }
+  def this(size: Double) = this(new jfxst.Font(size))
 
-  def maxHeight = delegate.maxHeightProperty
-  def maxHeight_= (v: Double) {
-    maxHeight() = v
-  }
+  def this(name: String, size: Double) = this(new jfxst.Font(name, size))
 
-  def minHeight = delegate.minHeightProperty
-  def minHeight_= (v: Double) {
-    minHeight() = v
-  }
-
-  def percentHeight = delegate.percentHeightProperty
-  def percentHeight_= (v: Double) {
-    percentHeight() = v
-  }
-
-  def prefHeight = delegate.prefHeightProperty
-  def prefHeight_= (v: Double) {
-    prefHeight() = v
-  }
-
-  def valignment = delegate.valignmentProperty
-  def valignment_= (v: jfxg.VPos) {
-    valignment() = v
-  }
-
-  def vgrow = delegate.vgrowProperty
-  def vgrow_= (v: jfxsl.Priority) {
-    vgrow() = v
-  }
+  def family = delegate.getFamily
+  def name = delegate.getName
+  def size = delegate.getSize
+  def style = delegate.getStyle
 }
