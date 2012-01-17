@@ -25,51 +25,74 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.layout
+package scalafx.scene.text
 
-import javafx.{geometry => jfxg}
-import javafx.scene.{layout => jfxsl}
-import scalafx.Includes._
+import javafx.scene.text.{FontWeight, FontPosture}
 import scalafx.util.SFXDelegate
+import scalafx.Includes._
+import javafx.scene.{text => jfxst}
+import javafx.geometry.VPos
+import scalafx.scene.shape.Shape
 
-object RowConstraints {
-  implicit def sfxRowConstraints2jfx(v: RowConstraints) = v.delegate
+object Text {
+  implicit def sfxText2jfx(v: Text) = v.delegate
 }
 
-class RowConstraints(override val delegate:jfxsl.RowConstraints = new jfxsl.RowConstraints()) extends ConstraintsBase(delegate) with SFXDelegate[jfxsl.RowConstraints] {
+class Text(override val delegate: jfxst.Text) extends Shape(delegate) with SFXDelegate[jfxst.Text]{
 
-  def fillHeight = delegate.fillHeightProperty
-  def fillHeight_= (v: Boolean) {
-    fillHeight() = v
+  def this() = this(new jfxst.Text)
+  def this(t: String) = this(new jfxst.Text(t))
+  def this(x: Double, y: Double, t: String) = this(new jfxst.Text(x, y, t))
+
+  def baselineOffset = delegate.baselineOffsetProperty
+
+  def boundsType = delegate.boundsTypeProperty
+  def boundsType_= (v: jfxst.TextBoundsType) {
+    boundsType() = v
   }
 
-  def maxHeight = delegate.maxHeightProperty
-  def maxHeight_= (v: Double) {
-    maxHeight() = v
+  def font = delegate.fontProperty
+  def font_= (v: jfxst.Font) {
+    font() = v
   }
 
-  def minHeight = delegate.minHeightProperty
-  def minHeight_= (v: Double) {
-    minHeight() = v
+  def strikethrough = delegate.strikethroughProperty
+  def strikethrough_= (v: Boolean) {
+    strikethrough = v
   }
 
-  def percentHeight = delegate.percentHeightProperty
-  def percentHeight_= (v: Double) {
-    percentHeight() = v
+  def text = delegate.textProperty
+  def text_= (v: String) {
+    text() = v
   }
 
-  def prefHeight = delegate.prefHeightProperty
-  def prefHeight_= (v: Double) {
-    prefHeight() = v
+  def textAlignment = delegate.textAlignmentProperty
+  def textAlignment_= (v: jfxst.TextAlignment) {
+    textAlignment() = v
   }
 
-  def valignment = delegate.valignmentProperty
-  def valignment_= (v: jfxg.VPos) {
-    valignment() = v
+  def textOrigin = delegate.textOriginProperty
+  def textOrigin_= (v: VPos) {
+    textOrigin() = v
   }
 
-  def vgrow = delegate.vgrowProperty
-  def vgrow_= (v: jfxsl.Priority) {
-    vgrow() = v
+  def underline = delegate.underlineProperty
+  def underline_= (v: Boolean) {
+    underline() = v
+  }
+
+  def wrappingWidth = delegate.wrappingWidthProperty
+  def wrappingWidth_= (v: Double) {
+    wrappingWidth() = v
+  }
+
+  def x = delegate.xProperty
+  def x_= (v: Double) {
+    x() = v
+  }
+
+  def y = delegate.yProperty
+  def y_= (v: Double) {
+    y() = v
   }
 }

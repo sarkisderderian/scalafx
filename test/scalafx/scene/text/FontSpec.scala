@@ -25,51 +25,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.layout
+package scalafx.scene.text
 
-import javafx.{geometry => jfxg}
-import javafx.scene.{layout => jfxsl}
+import javafx.scene.{text => jfxs}
+import org.scalatest.matchers.ShouldMatchers._
 import scalafx.Includes._
-import scalafx.util.SFXDelegate
+import scalafx.testutil.PropertyComparator
+import org.scalatest.{SeveredStackTraces, FlatSpec}
 
-object RowConstraints {
-  implicit def sfxRowConstraints2jfx(v: RowConstraints) = v.delegate
-}
+class FontSpec extends FlatSpec with PropertyComparator with SeveredStackTraces {
 
-class RowConstraints(override val delegate:jfxsl.RowConstraints = new jfxsl.RowConstraints()) extends ConstraintsBase(delegate) with SFXDelegate[jfxsl.RowConstraints] {
+  val jfxClass = classOf[jfxs.Font]
+  val sfxClass = classOf[Font]
 
-  def fillHeight = delegate.fillHeightProperty
-  def fillHeight_= (v: Boolean) {
-    fillHeight() = v
+  "A " + sfxClass.getName should "implement all the JavaFX properties" in {
+    compareProperties(jfxClass, sfxClass)
   }
 
-  def maxHeight = delegate.maxHeightProperty
-  def maxHeight_= (v: Double) {
-    maxHeight() = v
+  it should "implement all the JavaFX builder properties" in {
+    compareBuilderProperties(classOf[jfxs.FontBuilder], sfxClass)
   }
 
-  def minHeight = delegate.minHeightProperty
-  def minHeight_= (v: Double) {
-    minHeight() = v
+  it should "declare all public methods of " + jfxClass.getName in {
+    compareDeclaredMethods(jfxClass, sfxClass)
   }
 
-  def percentHeight = delegate.percentHeightProperty
-  def percentHeight_= (v: Double) {
-    percentHeight() = v
-  }
+  it should "have implicit conversions between SFX <-> JFX" in {
+    val sfxOriginalInstance: Font = new Font(12)
+    val jfxInstance: jfxs.Font = sfxOriginalInstance
+    val sfxInstance: Font = jfxInstance
 
-  def prefHeight = delegate.prefHeightProperty
-  def prefHeight_= (v: Double) {
-    prefHeight() = v
-  }
-
-  def valignment = delegate.valignmentProperty
-  def valignment_= (v: jfxg.VPos) {
-    valignment() = v
-  }
-
-  def vgrow = delegate.vgrowProperty
-  def vgrow_= (v: jfxsl.Priority) {
-    vgrow() = v
+    sfxOriginalInstance.delegate should be (jfxInstance)
+    jfxInstance should be (sfxInstance.delegate)
   }
 }

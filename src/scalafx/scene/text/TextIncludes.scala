@@ -25,51 +25,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.layout
+package scalafx.scene.text
 
-import javafx.{geometry => jfxg}
-import javafx.scene.{layout => jfxsl}
-import scalafx.Includes._
-import scalafx.util.SFXDelegate
+import javafx.scene.{text => jfxst}
 
-object RowConstraints {
-  implicit def sfxRowConstraints2jfx(v: RowConstraints) = v.delegate
-}
+object TextIncludes extends TextIncludes
 
-class RowConstraints(override val delegate:jfxsl.RowConstraints = new jfxsl.RowConstraints()) extends ConstraintsBase(delegate) with SFXDelegate[jfxsl.RowConstraints] {
-
-  def fillHeight = delegate.fillHeightProperty
-  def fillHeight_= (v: Boolean) {
-    fillHeight() = v
-  }
-
-  def maxHeight = delegate.maxHeightProperty
-  def maxHeight_= (v: Double) {
-    maxHeight() = v
-  }
-
-  def minHeight = delegate.minHeightProperty
-  def minHeight_= (v: Double) {
-    minHeight() = v
-  }
-
-  def percentHeight = delegate.percentHeightProperty
-  def percentHeight_= (v: Double) {
-    percentHeight() = v
-  }
-
-  def prefHeight = delegate.prefHeightProperty
-  def prefHeight_= (v: Double) {
-    prefHeight() = v
-  }
-
-  def valignment = delegate.valignmentProperty
-  def valignment_= (v: jfxg.VPos) {
-    valignment() = v
-  }
-
-  def vgrow = delegate.vgrowProperty
-  def vgrow_= (v: jfxsl.Priority) {
-    vgrow() = v
-  }
+trait TextIncludes {
+  implicit def jfxFont2sfxFont(f: jfxst.Font) = new Font(f)
+  implicit def jfxText2sfxText(t: jfxst.Text) = new Text(t)
 }

@@ -25,51 +25,51 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.layout
+package scalafx
 
-import javafx.{geometry => jfxg}
-import javafx.scene.{layout => jfxsl}
-import scalafx.Includes._
-import scalafx.util.SFXDelegate
+import application.JFXApp
+import scene.control.Accordion._
+import scene.control.Labeled._
+import scene.control.TitledPane._
+import scene.control.{Label, ScrollPane, TitledPane, Accordion}
+import scene.layout.Pane._
+import scene.layout.{VBox, HBox}
+import scene.Scene
+import scene.Scene._
+import scene.shape.Circle
+import scene.shape.Circle._
+import scene.text.{Font, Text}
+import stage.Stage
+import stage.Stage._
+import javafx.scene.paint.Color
+import javafx.geometry.{Pos, VPos}
 
-object RowConstraints {
-  implicit def sfxRowConstraints2jfx(v: RowConstraints) = v.delegate
-}
-
-class RowConstraints(override val delegate:jfxsl.RowConstraints = new jfxsl.RowConstraints()) extends ConstraintsBase(delegate) with SFXDelegate[jfxsl.RowConstraints] {
-
-  def fillHeight = delegate.fillHeightProperty
-  def fillHeight_= (v: Boolean) {
-    fillHeight() = v
+object LayoutDemo extends JFXApp {
+  val hello = new Accordion {
+    panes = List(
+      new TitledPane {
+        content = new Label { text = "Hello" }
+      }
+    )
   }
 
-  def maxHeight = delegate.maxHeightProperty
-  def maxHeight_= (v: Double) {
-    maxHeight() = v
-  }
+  val hbox1 = new HBox { content=List(hello, new Label { text = "Goodbye" }) }
+  val hbox2 = new HBox { content=List(new Circle { radius=20 }, new Label { text = "Strange" }) }
 
-  def minHeight = delegate.minHeightProperty
-  def minHeight_= (v: Double) {
-    minHeight() = v
-  }
+  val charm = new Text("charm") { font = new Font(24); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
+  val strange = new Text("strange") { font = new Font(12); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
 
-  def percentHeight = delegate.percentHeightProperty
-  def percentHeight_= (v: Double) {
-    percentHeight() = v
-  }
-
-  def prefHeight = delegate.prefHeightProperty
-  def prefHeight_= (v: Double) {
-    prefHeight() = v
-  }
-
-  def valignment = delegate.valignmentProperty
-  def valignment_= (v: jfxg.VPos) {
-    valignment() = v
-  }
-
-  def vgrow = delegate.vgrowProperty
-  def vgrow_= (v: jfxsl.Priority) {
-    vgrow() = v
+  stage = new Stage {
+    width = 1024
+    height = 768
+    scene = new Scene {
+      content = new ScrollPane {
+        content = new HBox {
+          alignment = Pos.BASELINE_LEFT
+          fill = Color.BLUE
+          content = List(charm, strange)
+        }
+      }
+    }
   }
 }
