@@ -33,6 +33,8 @@ import scalafx.util.SFXDelegate
 object Color {
   implicit def sfxColor2jfx(c: Color) = c.delegate
 
+  def apply(red: Double, green: Double, blue: Double, opacity: Double) = new Color(new jfxsp.Color(red, green, blue, opacity))
+  
   /**
    * Creates an RGB color specified with hexadecimal notation or color name.
    */
@@ -290,6 +292,12 @@ class Color(override val delegate: jfxsp.Color) extends Paint(delegate) with SFX
    * Does someone uses this method?  
    */
   def opacity(o: Double) = jfxsp.Color.color(red, green, blue, o)
+
+  /**
+   * Creates a new Color that is a brighter version of this Color.
+   */
+  def brighter = delegate.brighter
+  
 
   /**
    * Creates a new Color that is a darker version of this Color.

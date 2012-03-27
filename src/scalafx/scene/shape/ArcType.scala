@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright (c) 2011, ScalaFX Project
  * All rights reserved.
@@ -25,51 +27,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene.shape
+package scalafx.scene.paint
 
-import scalafx.Includes._
 import javafx.scene.{shape => jfxss}
-import scalafx.scene.paint._
 import scalafx.util.SFXDelegate
 
-object Rectangle {
-  implicit def sfxRectangle2jfx(v: Rectangle) = v.delegate
-
-  def apply(width: Double, height: Double) = new Rectangle(new jfxss.Rectangle(width, height))
-  def apply(x: Double, y: Double, width: Double, height: Double) = 
-    new Rectangle(new jfxss.Rectangle(x, y, width, height))
-  def apply(width: Double, height: Double, fill: Paint) = 
-    new Rectangle(new jfxss.Rectangle(width, height, fill))
+//I think it might be better to implemented this way rather than extending Enumeration
+object ArcType {
+  implicit def sfxArcType2jfx(c: ArcType) = c.delegate
+  
+  val CHORD = new ArcType(jfxss.ArcType.CHORD)
+  val OPEN = new ArcType(jfxss.ArcType.OPEN)
+  val ROUND = new ArcType(jfxss.ArcType.ROUND)
+  
+  def valueOf(name: String) = name match {
+    case "CHORD" => CHORD
+    case "OPEN" => OPEN
+    case "ROUND" => ROUND
+  }
+  def values = List(CHORD, OPEN, ROUND)
 }
 
-class Rectangle(override val delegate:jfxss.Rectangle = new jfxss.Rectangle()) extends Shape(delegate) with SFXDelegate[jfxss.Rectangle] {
-  def x = delegate.xProperty
-  def x_=(v: Double) {
-    x() = v
-  }
-
-  def y = delegate.yProperty
-  def y_=(v: Double) {
-    y() = v
-  }
-
-  def width = delegate.widthProperty
-  def width_=(v: Double) {
-    width() = v
-  }
-
-  def height = delegate.heightProperty
-  def height_=(v: Double) {
-    height() = v
-  }
-
-  def arcWidth = delegate.arcWidthProperty
-  def arcWidth_=(v: Double) {
-    arcWidth() = v
-  }
-
-  def arcHeight = delegate.arcHeightProperty
-  def arcHeight_=(v: Double) {
-    arcHeight() = v
-  }
-}
+class ArcType(override val delegate:jfxss.ArcType) extends SFXDelegate[jfxss.ArcType]

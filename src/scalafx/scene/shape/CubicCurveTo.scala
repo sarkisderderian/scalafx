@@ -31,46 +31,41 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object CubicCurveTo {
+  implicit def sfxCubicCurveTo2jfx(v: CubicCurveTo) = v.delegate
+
+  def apply(controlX1: Double, controlY1: Double, controlX2: Double, controlY2: Double, x: Double, y: Double) = 
+    new CubicCurveTo(new jfxss.CubicCurveTo(controlX1, controlY1, controlX2, controlY2, x, y))
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
+class CubicCurveTo(override val delegate:jfxss.CubicCurveTo = new jfxss.CubicCurveTo()) extends PathElement(delegate) with SFXDelegate[jfxss.CubicCurveTo] {
+  def controlX1 = delegate.controlX1Property
+  def controlX1_=(v: Double) {
+    controlX1() = v
   }
 
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
+  def controlX2 = delegate.controlX2Property
+  def controlX2_=(v: Double) {
+    controlX2() = v
   }
 
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
+  def controlY1 = delegate.controlY1Property
+  def controlY1_=(v: Double) {
+    controlY1() = v
   }
 
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
+  def controlY2 = delegate.controlY2Property
+  def controlY2_=(v: Double) {
+    controlY2() = v
   }
 
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
+  def x = delegate.xProperty
+  def x_=(v: Double) {
+    x() = v
   }
 
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+  def y = delegate.yProperty
+  def y_=(v: Double) {
+    y() = v
   }
 }

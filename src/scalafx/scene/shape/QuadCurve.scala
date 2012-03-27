@@ -31,46 +31,41 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object QuadCurve {
+  implicit def sfxQuadCurve2jfx(v: QuadCurve) = v.delegate
+
+  def apply(startX: Double, startY: Double, controlX: Double, controlY: Double, endX: Double, endY: Double) = 
+    new QuadCurve(new jfxss.QuadCurve(startX, startY, controlX, controlY, endX, endY))
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
+class QuadCurve(override val delegate:jfxss.QuadCurve = new jfxss.QuadCurve()) extends Shape(delegate) with SFXDelegate[jfxss.QuadCurve] {
+  def controlX = delegate.controlXProperty
+  def controlX_=(v: Double) {
+    controlX() = v
   }
 
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
+  def controlY = delegate.controlYProperty
+  def controlY_=(v: Double) {
+    controlY() = v
   }
 
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
+  def endX = delegate.endXProperty
+  def endX_=(v: Double) {
+    endX() = v
   }
 
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
+  def endY = delegate.endYProperty
+  def endY_=(v: Double) {
+    endY() = v
   }
 
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
+  def startX = delegate.startXProperty
+  def startX_=(v: Double) {
+    startX() = v
   }
 
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+  def startY = delegate.startYProperty
+  def startY_=(v: Double) {
+    startY() = v
   }
 }

@@ -27,50 +27,19 @@
 
 package scalafx.scene.shape
 
+import collection.JavaConversions._
+import javafx.beans.{property => jfxbp}
 import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object PathElement {
+  implicit def sfxPathElement2jfx(v: PathElement) = v.delegate
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
-  }
-
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
-  }
-
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
-  }
-
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
-  }
-
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
-  }
-
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+abstract class PathElement(override val delegate:jfxss.PathElement) extends SFXDelegate[jfxss.PathElement] {
+  def absolute = delegate.absoluteProperty
+  def absolute_=(v: Boolean) {
+    absolute() = v
   }
 }
