@@ -31,46 +31,31 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object QuadCurveTo {
+  implicit def sfxQuadCurveTo2jfx(v: QuadCurveTo) = v.delegate
+
+  def apply(controlX: Double, controlY: Double, x: Double, y: Double) = 
+    new QuadCurveTo(new jfxss.QuadCurveTo(controlX, controlY, x, y))
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
+class QuadCurveTo(override val delegate:jfxss.QuadCurveTo = new jfxss.QuadCurveTo()) extends PathElement(delegate) with SFXDelegate[jfxss.QuadCurveTo] {
+  def controlX = delegate.controlXProperty
+  def controlX_=(v: Double) {
+    controlX() = v
   }
 
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
+  def controlY = delegate.controlYProperty
+  def controlY_=(v: Double) {
+    controlY() = v
   }
 
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
+  def x = delegate.xProperty
+  def x_=(v: Double) {
+    x() = v
   }
 
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
-  }
-
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
-  }
-
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+  def y = delegate.yProperty
+  def y_=(v: Double) {
+    y() = v
   }
 }

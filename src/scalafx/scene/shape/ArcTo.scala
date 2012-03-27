@@ -31,32 +31,22 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object ArcTo {
+  implicit def sfxArcTo2jfx(v: ArcTo) = v.delegate
+
+  def apply(radiusX: Double, radiusY: Double, xAxisRotation: Double, x: Double, y: Double, largeArcFlag: Boolean, sweepFlag: Boolean) = 
+    new ArcTo(new jfxss.ArcTo(radiusX, radiusY, xAxisRotation, x, y , largeArcFlag, sweepFlag))
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
+class ArcTo(override val delegate:jfxss.ArcTo = new jfxss.ArcTo()) extends PathElement(delegate) with SFXDelegate[jfxss.ArcTo] {
+  def XAxisRotation = delegate.XAxisRotationProperty
+  def XAxisRotation_=(v: Double) {
+    XAxisRotation() = v
   }
 
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
-  }
-
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
-  }
-
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
+  def sweepFlag = delegate.sweepFlagProperty
+  def sweepFlag_=(v: Boolean) {
+    sweepFlag() = v
   }
 
   def radiusY = delegate.radiusYProperty
@@ -64,13 +54,23 @@ class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(deleg
     radiusY() = v
   }
 
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
+  def radiusX = delegate.radiusXProperty
+  def radiusX_=(v: Double) {
+    radiusX() = v
   }
 
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+  def largeArcFlag = delegate.largeArcFlagProperty
+  def largeArcFlag_=(v: Boolean) {
+    largeArcFlag() = v
+  }
+
+  def x = delegate.xProperty
+  def x_=(v: Double) {
+    x() = v
+  }
+
+  def y = delegate.yProperty
+  def y_=(v: Double) {
+    y() = v
   }
 }

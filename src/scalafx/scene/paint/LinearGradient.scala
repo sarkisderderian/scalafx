@@ -27,18 +27,34 @@
 
 package scalafx.scene.paint
 
-import javafx.scene.{ paint => jfxsp }
+import javafx.scene.{paint => jfxsp}
 import scala.collection.JavaConversions._
 import scalafx.util.SFXDelegate
 
 object LinearGradient {
   implicit def sfxLinearGradient2jfx(lg: LinearGradient) = lg.delegate
+  
+  def apply(startX: Double, startY: Double, endX: Double, endY: Double, proportional: Boolean, cycleMethod: CycleMethod, stops: List[Stop]) { 
+    val stopsList = new java.util.ArrayList[jfxsp.Stop](stops.length)
+    for (stop <- stops) stopsList.add(stop)
+    new LinearGradient(new jfxsp.LinearGradient(startX, startY, endX, endY, proportional, cycleMethod, stopsList))
+  }
 
   /**
    * Creates a linear gradient value from a string representation.
    */
   def valueOf(value: String) = jfxsp.LinearGradient.valueOf(value)
 
+/* This should work but it looks like it calls the constructor that 
+ * uses List instead of the one that uses variable arguments
+  def apply(startX: Double, startY: Double, endX: Double, endY: Double, proportional: Boolean, cycleMethod: CycleMethod, stops: Stop*) =
+    new LinearGradient(new jfxsp.LinearGradient(startX, startY, endX, endY, proportional, cycleMethod, stops: _*))
+ */
+  def apply(startX: Double, startY: Double, endX: Double, endY: Double, proportional: Boolean, cycleMethod: CycleMethod, stops: Stop*) {
+    val stopsList = new java.util.ArrayList[jfxsp.Stop](stops.length)
+    for (stop <- stops) stopsList.add(stop)
+    new LinearGradient(new jfxsp.LinearGradient(startX, startY, endX, endY, proportional, cycleMethod, stopsList))
+  }
 }
 
 class LinearGradient(override val delegate: jfxsp.LinearGradient) extends Paint(delegate) with SFXDelegate[jfxsp.LinearGradient] {

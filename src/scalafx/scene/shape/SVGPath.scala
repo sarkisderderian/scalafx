@@ -32,44 +32,18 @@ import javafx.scene.{shape => jfxss}
 import scalafx.scene.paint._
 import scalafx.util.SFXDelegate
 
-object Rectangle {
-  implicit def sfxRectangle2jfx(v: Rectangle) = v.delegate
-
-  def apply(width: Double, height: Double) = new Rectangle(new jfxss.Rectangle(width, height))
-  def apply(x: Double, y: Double, width: Double, height: Double) = 
-    new Rectangle(new jfxss.Rectangle(x, y, width, height))
-  def apply(width: Double, height: Double, fill: Paint) = 
-    new Rectangle(new jfxss.Rectangle(width, height, fill))
+object SVGPath {
+  implicit def sfxSVGPath2jfx(v: SVGPath) = v.delegate
 }
 
-class Rectangle(override val delegate:jfxss.Rectangle = new jfxss.Rectangle()) extends Shape(delegate) with SFXDelegate[jfxss.Rectangle] {
-  def x = delegate.xProperty
-  def x_=(v: Double) {
-    x() = v
+class SVGPath(override val delegate:jfxss.SVGPath = new jfxss.SVGPath()) extends Shape(delegate) with SFXDelegate[jfxss.SVGPath] {
+  def content = delegate.contentProperty
+  def content_=(v: String) {
+    content() = v
   }
 
-  def y = delegate.yProperty
-  def y_=(v: Double) {
-    y() = v
-  }
-
-  def width = delegate.widthProperty
-  def width_=(v: Double) {
-    width() = v
-  }
-
-  def height = delegate.heightProperty
-  def height_=(v: Double) {
-    height() = v
-  }
-
-  def arcWidth = delegate.arcWidthProperty
-  def arcWidth_=(v: Double) {
-    arcWidth() = v
-  }
-
-  def arcHeight = delegate.arcHeightProperty
-  def arcHeight_=(v: Double) {
-    arcHeight() = v
+  def fillRule = delegate.fillRuleProperty
+  def fillRule_=(v: FillRule) {
+    fillRule() = v
   }
 }

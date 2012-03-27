@@ -31,46 +31,8 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object ClosePath {
+  implicit def sfxClosePath2jfx(v: ClosePath) = v.delegate
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
-  }
-
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
-  }
-
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
-  }
-
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
-  }
-
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
-  }
-
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
-  }
-}
+class ClosePath(override val delegate:jfxss.ClosePath = new jfxss.ClosePath()) extends PathElement(delegate) with SFXDelegate[jfxss.ClosePath]

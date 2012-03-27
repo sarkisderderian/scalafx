@@ -31,46 +31,15 @@ import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.util.SFXDelegate
 
-object Arc {
-  implicit def sfxArc2jfx(v: Arc) = v.delegate
-  
-  def apply(centerX: Double, centerY: Double, radiusX: Double, radiusY: Double, startAngle: Double, length: Double) = 
-    new Arc(new jfxss.Arc(centerX, centerY, radiusX, radiusY, startAngle, length))
+object HLineTo {
+  implicit def sfxHLineTo2jfx(v: HLineTo) = v.delegate
+
+  def apply(x: Double) = new HLineTo(new jfxss.HLineTo(x))
 }
 
-class Arc(override val delegate:jfxss.Arc = new jfxss.Arc()) extends Shape(delegate) with SFXDelegate[jfxss.Arc] {
-  def centerX = delegate.centerXProperty
-  def centerX_=(v: Double) {
-    centerX() = v
-  }
-
-  def centerY = delegate.centerYProperty
-  def centerY_=(v: Double) {
-    centerY() = v
-  }
-
-  def length = delegate.lengthProperty
-  def length_=(v: Double) {
-    length() = v
-  }
-
-  def radiusX = delegate.radiusXProperty
-  def radiusX_=(v: Double) {
-    radiusX() = v
-  }
-
-  def radiusY = delegate.radiusYProperty
-  def radiusY_=(v: Double) {
-    radiusY() = v
-  }
-
-  def startAngle = delegate.startAngleProperty
-  def startAngle_=(v: Double) {
-    startAngle() = v
-  }
-
-  def `type` = delegate.typeProperty
-  def `type_=`(v: jfxss.ArcType) {
-    `type`() = v
+class HLineTo(override val delegate:jfxss.HLineTo = new jfxss.HLineTo()) extends PathElement(delegate) with SFXDelegate[jfxss.HLineTo] {
+  def x = delegate.xProperty
+  def x_=(v: Double) {
+    x() = v
   }
 }
