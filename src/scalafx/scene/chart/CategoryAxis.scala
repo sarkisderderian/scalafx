@@ -25,32 +25,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene
+package scalafx.scene.chart
 
-import javafx.beans.{property => jfxbp}
-import javafx.{scene => jfxs}
-import chart.ChartIncludes
-import layout.LayoutIncludes
-import image.ImageIncludes
-import paint.PaintIncludes
-import shape.ShapeIncludes
-import control.ControlIncludes
-import text.TextIncludes
-import effect.EffectIncludes
+import javafx.scene.{chart => jfxsc}
+import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
+import scalafx.util.SFXDelegate
 
-object SceneIncludes extends SceneIncludes
+object CategoryAxis {
+  implicit def sfxCategoryAxis2jfx(v: CategoryAxis) = v.delegate
+  
+  def apply(categories: ObservableBuffer[String]) = new CategoryAxis(new jfxsc.CategoryAxis(categories))
+}
 
-trait SceneIncludes extends ChartIncludes with LayoutIncludes with PaintIncludes with ShapeIncludes with TextIncludes with ImageIncludes with EffectIncludes with LowerPriorityIncludes with ControlIncludes
+final class CategoryAxis(override val delegate:jfxsc.CategoryAxis = new jfxsc.CategoryAxis) extends Axis[String](delegate) with SFXDelegate[jfxsc.CategoryAxis] {
+  def categorySpacing = delegate.categorySpacingProperty
+  
+  def endMargin = delegate.endMarginProperty
+  def endMargin_= (v: Double) {
+    endMargin() = v
+  }
 
-trait LowerPriorityIncludes {
-  implicit def jfxCamera2sfx(v: jfxs.Camera) = new Camera(v) {}
-  implicit def jfxCursor2sfx(v: jfxs.Cursor) = new Cursor(v) {}
-  implicit def jfxGroup2sfx(v: jfxs.Group) = new Group(v)
-  implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
-  implicit def jfxNode2sfx(v: jfxs.Node) = new Node(v) {}
-  implicit def jfxParallelCamera2sfx(v: jfxs.ParallelCamera) = new ParallelCamera(v)
-  implicit def jfxParent2sfx(v: jfxs.Parent) = new Parent(v) {}
-  implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
-  implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
-  implicit def jfxSceneProperty2sfx(p: jfxbp.ReadOnlyObjectProperty[jfxs.Scene]) = new SceneProperty(p)
+  def gapStartAndEnd = delegate.gapStartAndEndProperty
+  def gapStartAndEnd_= (v: Boolean) {
+    gapStartAndEnd() = v
+  }
+  
+  def startMargin = delegate.startMarginProperty
+  def startMargin_= (v: Double) {
+    startMargin() = v
+  }
+  
+  def categories = delegate.getCategories
+  def categories_= (value: ObservableBuffer[String]) = delegate.setCategories(value)
+
 }

@@ -25,32 +25,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene
+package scalafx.scene.chart
 
-import javafx.beans.{property => jfxbp}
-import javafx.{scene => jfxs}
-import chart.ChartIncludes
-import layout.LayoutIncludes
-import image.ImageIncludes
-import paint.PaintIncludes
-import shape.ShapeIncludes
-import control.ControlIncludes
-import text.TextIncludes
-import effect.EffectIncludes
+import javafx.scene.{chart => jfxsc}
+import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
+import scalafx.util.SFXDelegate
+import scalafx.util.converter.StringConverterDelegate
 
-object SceneIncludes extends SceneIncludes
+object NumberAxis {
+  implicit def sfxNumberAxis2jfx(v: NumberAxis) = v.delegate
+  
+  def apply(lowerBound: Double, upperBound: Double, tickUnit: Double) = new NumberAxis(new jfxsc.NumberAxis(lowerBound, upperBound, tickUnit))
+  
+  def apply(axisLabel: String, lowerBound: Double, upperBound: Double, tickUnit: Double) = new NumberAxis(new jfxsc.NumberAxis(axisLabel, lowerBound, upperBound, tickUnit))
+  
+  object DefaultFormatter {
+    implicit def sfxDefaultFormatter2jfx(v: DefaultFormatter) = v.delegate
+    
+    def apply(axis: NumberAxis) = new DefaultFormatter(new jfxsc.NumberAxis.DefaultFormatter(axis))
+    
+    def apply(axis: NumberAxis, prefix: String, suffix: String) = new DefaultFormatter(new jfxsc.NumberAxis.DefaultFormatter(axis, prefix, suffix))
+  }
+  
+  class DefaultFormatter(override val delegate:jfxsc.NumberAxis.DefaultFormatter) extends StringConverterDelegate[java.lang.Number, Number, jfxsc.NumberAxis.DefaultFormatter](delegate)
+}
 
-trait SceneIncludes extends ChartIncludes with LayoutIncludes with PaintIncludes with ShapeIncludes with TextIncludes with ImageIncludes with EffectIncludes with LowerPriorityIncludes with ControlIncludes
-
-trait LowerPriorityIncludes {
-  implicit def jfxCamera2sfx(v: jfxs.Camera) = new Camera(v) {}
-  implicit def jfxCursor2sfx(v: jfxs.Cursor) = new Cursor(v) {}
-  implicit def jfxGroup2sfx(v: jfxs.Group) = new Group(v)
-  implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
-  implicit def jfxNode2sfx(v: jfxs.Node) = new Node(v) {}
-  implicit def jfxParallelCamera2sfx(v: jfxs.ParallelCamera) = new ParallelCamera(v)
-  implicit def jfxParent2sfx(v: jfxs.Parent) = new Parent(v) {}
-  implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
-  implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
-  implicit def jfxSceneProperty2sfx(p: jfxbp.ReadOnlyObjectProperty[jfxs.Scene]) = new SceneProperty(p)
+final class NumberAxis(override val delegate:jfxsc.NumberAxis = new jfxsc.NumberAxis) extends ValueAxis[Number](delegate) with SFXDelegate[jfxsc.NumberAxis] {
+  def forceZeroInRange = delegate.forceZeroInRangeProperty
+  def forceZeroInRange_= (v: Boolean) {
+    forceZeroInRange() = v
+  }
+  
+  def tickUnit = delegate.tickUnitProperty
+  def tickUnit_= (v: Double) {
+    tickUnit() = v
+  }
+  
 }

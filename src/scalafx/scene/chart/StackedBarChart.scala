@@ -25,32 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene
+package scalafx.scene.chart
 
-import javafx.beans.{property => jfxbp}
-import javafx.{scene => jfxs}
-import chart.ChartIncludes
-import layout.LayoutIncludes
-import image.ImageIncludes
-import paint.PaintIncludes
-import shape.ShapeIncludes
-import control.ControlIncludes
-import text.TextIncludes
-import effect.EffectIncludes
+import javafx.scene.{chart => jfxsc}
+import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
+import scalafx.util.SFXDelegate
 
-object SceneIncludes extends SceneIncludes
+object StackedBarChart {
+  implicit def sfxStackedBarChart2jfx[X, Y](v: StackedBarChart[X, Y]) = v.delegate
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) = new StackedBarChart[X, Y](new jfxsc.StackedBarChart[X, Y](xAxis, yAxis))
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y], data: ObservableBuffer[jfxsc.XYChart.Series[X, Y]]) = new StackedBarChart[X, Y](new jfxsc.StackedBarChart[X, Y](xAxis, yAxis, data))
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y], data: ObservableBuffer[jfxsc.XYChart.Series[X, Y]], categoryGap: Double) = new StackedBarChart[X, Y](new jfxsc.StackedBarChart[X, Y](xAxis, yAxis, data, categoryGap))
+}
 
-trait SceneIncludes extends ChartIncludes with LayoutIncludes with PaintIncludes with ShapeIncludes with TextIncludes with ImageIncludes with EffectIncludes with LowerPriorityIncludes with ControlIncludes
-
-trait LowerPriorityIncludes {
-  implicit def jfxCamera2sfx(v: jfxs.Camera) = new Camera(v) {}
-  implicit def jfxCursor2sfx(v: jfxs.Cursor) = new Cursor(v) {}
-  implicit def jfxGroup2sfx(v: jfxs.Group) = new Group(v)
-  implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
-  implicit def jfxNode2sfx(v: jfxs.Node) = new Node(v) {}
-  implicit def jfxParallelCamera2sfx(v: jfxs.ParallelCamera) = new ParallelCamera(v)
-  implicit def jfxParent2sfx(v: jfxs.Parent) = new Parent(v) {}
-  implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
-  implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
-  implicit def jfxSceneProperty2sfx(p: jfxbp.ReadOnlyObjectProperty[jfxs.Scene]) = new SceneProperty(p)
+class StackedBarChart[X, Y](override val delegate:jfxsc.StackedBarChart[X, Y]) extends XYChart[X, Y](delegate) with SFXDelegate[jfxsc.StackedBarChart[X, Y]] {
+  def categoryGap = delegate.categoryGapProperty
+  def categoryGap_= (v: Double) {
+    categoryGap() = v
+  }
 }

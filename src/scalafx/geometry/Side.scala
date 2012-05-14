@@ -1,3 +1,5 @@
+
+
 /*
  * Copyright (c) 2011, ScalaFX Project
  * All rights reserved.
@@ -25,32 +27,30 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene
+package scalafx.geometry
 
-import javafx.beans.{property => jfxbp}
-import javafx.{scene => jfxs}
-import chart.ChartIncludes
-import layout.LayoutIncludes
-import image.ImageIncludes
-import paint.PaintIncludes
-import shape.ShapeIncludes
-import control.ControlIncludes
-import text.TextIncludes
-import effect.EffectIncludes
+import javafx.{geometry => jfxg}
+import scalafx.util.SFXDelegate
 
-object SceneIncludes extends SceneIncludes
+//I think it might be better to implemented this way rather than extending Enumeration
+object Side {
+  implicit def sfxSide2jfx(c: Side) = c.delegate
+  
+  val BOTTOM = new Side(jfxg.Side.BOTTOM)
+  val LEFT = new Side(jfxg.Side.LEFT)
+  val RIGHT = new Side(jfxg.Side.RIGHT)
+  val TOP = new Side(jfxg.Side.TOP)
+  
+  def valueOf(name: String) = name match {
+    case "BOTTOM" => BOTTOM
+    case "LEFT" => LEFT
+    case "RIGHT" => RIGHT
+    case "TOP" => TOP
+  }
+  def values = List(BOTTOM, LEFT, RIGHT, TOP)
+}
 
-trait SceneIncludes extends ChartIncludes with LayoutIncludes with PaintIncludes with ShapeIncludes with TextIncludes with ImageIncludes with EffectIncludes with LowerPriorityIncludes with ControlIncludes
-
-trait LowerPriorityIncludes {
-  implicit def jfxCamera2sfx(v: jfxs.Camera) = new Camera(v) {}
-  implicit def jfxCursor2sfx(v: jfxs.Cursor) = new Cursor(v) {}
-  implicit def jfxGroup2sfx(v: jfxs.Group) = new Group(v)
-  implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
-  implicit def jfxNode2sfx(v: jfxs.Node) = new Node(v) {}
-  implicit def jfxParallelCamera2sfx(v: jfxs.ParallelCamera) = new ParallelCamera(v)
-  implicit def jfxParent2sfx(v: jfxs.Parent) = new Parent(v) {}
-  implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
-  implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
-  implicit def jfxSceneProperty2sfx(p: jfxbp.ReadOnlyObjectProperty[jfxs.Scene]) = new SceneProperty(p)
+class Side(override val delegate:jfxg.Side) extends SFXDelegate[jfxg.Side] {
+  def isHorizontal = delegate.isHorizontal()
+  def isVertical = delegate.isVertical()
 }

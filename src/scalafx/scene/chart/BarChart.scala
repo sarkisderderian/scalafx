@@ -25,32 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.scene
+package scalafx.scene.chart
 
-import javafx.beans.{property => jfxbp}
-import javafx.{scene => jfxs}
-import chart.ChartIncludes
-import layout.LayoutIncludes
-import image.ImageIncludes
-import paint.PaintIncludes
-import shape.ShapeIncludes
-import control.ControlIncludes
-import text.TextIncludes
-import effect.EffectIncludes
+import javafx.scene.{chart => jfxsc}
+import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
+import scalafx.util.SFXDelegate
 
-object SceneIncludes extends SceneIncludes
+object BarChart {
+  implicit def sfxBarChart2jfx[X, Y](v: BarChart[X, Y]) = v.delegate
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y]) = new BarChart[X, Y](new jfxsc.BarChart[X, Y](xAxis, yAxis))
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y], data: ObservableBuffer[jfxsc.XYChart.Series[X, Y]]) = new BarChart[X, Y](new jfxsc.BarChart[X, Y](xAxis, yAxis, data))
+  
+  def apply[X, Y](xAxis: Axis[X], yAxis: Axis[Y], data: ObservableBuffer[jfxsc.XYChart.Series[X, Y]], categoryGap: Double) = new BarChart[X, Y](new jfxsc.BarChart[X, Y](xAxis, yAxis, data, categoryGap))
+}
 
-trait SceneIncludes extends ChartIncludes with LayoutIncludes with PaintIncludes with ShapeIncludes with TextIncludes with ImageIncludes with EffectIncludes with LowerPriorityIncludes with ControlIncludes
-
-trait LowerPriorityIncludes {
-  implicit def jfxCamera2sfx(v: jfxs.Camera) = new Camera(v) {}
-  implicit def jfxCursor2sfx(v: jfxs.Cursor) = new Cursor(v) {}
-  implicit def jfxGroup2sfx(v: jfxs.Group) = new Group(v)
-  implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
-  implicit def jfxNode2sfx(v: jfxs.Node) = new Node(v) {}
-  implicit def jfxParallelCamera2sfx(v: jfxs.ParallelCamera) = new ParallelCamera(v)
-  implicit def jfxParent2sfx(v: jfxs.Parent) = new Parent(v) {}
-  implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
-  implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
-  implicit def jfxSceneProperty2sfx(p: jfxbp.ReadOnlyObjectProperty[jfxs.Scene]) = new SceneProperty(p)
+class BarChart[X, Y](override val delegate:jfxsc.BarChart[X, Y]) extends XYChart[X, Y](delegate) with SFXDelegate[jfxsc.BarChart[X, Y]] {
+  def barGap = delegate.barGapProperty
+  def barGap_= (v: Double) {
+    barGap() = v
+  }
+  
+  def categoryGap = delegate.categoryGapProperty
+  def categoryGap_= (v: Double) {
+    categoryGap() = v
+  }
 }
