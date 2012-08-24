@@ -35,41 +35,75 @@ import scalafx.scene.{input => sfxsi}
 object EventIncludes extends EventIncludes
 
 trait EventIncludes {
-  implicit def jfxActionEvent2sfx(ae: jfxe.ActionEvent) = new ActionEvent(ae)
-  implicit def jfxEvent2sfx(e: jfxe.Event) = new Event(e)
-  implicit def jfxEventType2sfx[T <: jfxe.Event](e: jfxe.EventType[T]) = new EventType[T](e)
+	implicit def jfxActionEvent2sfx(ae: jfxe.ActionEvent) = new ActionEvent(ae)
 
-  implicit def eventClosureWrapper[T <: jfxe.Event](handler: => Unit) = new jfxe.EventHandler[T] {
-    def handle(event: T) {
-      handler
-    }
-  }
+	implicit def jfxEvent2sfx(e: jfxe.Event) = new Event(e)
 
-  implicit def eventClosureWrapperWithUnitParam[T <: jfxe.Event](handler: Unit => Unit) = new jfxe.EventHandler[T] {
-    def handle(event: T) {
-      handler()
-    }
-  }
+	implicit def jfxEventType2sfx[T <: jfxe.Event](e: jfxe.EventType[T]) = new EventType[T](e)
 
-  implicit def eventClosureWrapperWithParam[T <: jfxe.Event](handler: (T) => Unit) = new jfxe.EventHandler[T] {
-    def handle(event: T) {
-      handler(event)
-    }
-  }
+	implicit def eventClosureWrapper[T <: jfxe.Event](handler: => Unit) = new jfxe.EventHandler[T] {
+		def handle(event: T) {
+			handler
+		}
+	}
 
-  implicit def mouseEventClosureWrapper(handler: (sfxsi.MouseEvent) => Unit) = new jfxe.EventHandler[jfxsi.MouseEvent] {
+	implicit def eventClosureWrapperWithUnitParam[T <: jfxe.Event](handler: Unit => Unit) = new jfxe.EventHandler[T] {
+		def handle(event: T) {
+			handler()
+		}
+	}
 
-    def handle(event: jfxsi.MouseEvent) {
-      handler(event)
-    }
-  }
+	implicit def eventClosureWrapperWithParam[T <: jfxe.Event](handler: (T) => Unit) = new jfxe.EventHandler[T] {
+		def handle(event: T) {
+			handler(event)
+		}
+	}
 
-  implicit def actionEventClosureWrapper(handler: (ActionEvent) => Unit) = new jfxe.EventHandler[jfxe.ActionEvent] {
+	/**
+	 * Converts a Function that manipulates a [[scalafx.scene.input.MouseEvent]] 
+	 * and returns a [[scala.Unit]] in a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/event/EventHandler.html JavaFX`s EventHandler]] 
+	 * that manipulates a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/scene/input/MouseEvent.html JavaFX`s MouseEvent]]
+	 * 
+	 * @param handler function that manipulates a ScalaFX`s MouseEvent
+	 * @return a JavaFX's EventHandler that manipulates a JavaFX`s MouseEvent
+	 */
+	implicit def mouseEventClosureWrapper(handler: (sfxsi.MouseEvent) => Unit) = new jfxe.EventHandler[jfxsi.MouseEvent] {
+		def handle(event: jfxsi.MouseEvent) {
+			handler(event)
+		}
+	}
 
-    import EventIncludes.jfxActionEvent2sfx
+	/**
+	 * Converts a Function that manipulates a [[scalafx.scene.input.KeyEvent]] 
+	 * and returns a [[scala.Unit]] in a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/event/EventHandler.html JavaFX`s EventHandler]] 
+	 * that manipulates a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/scene/input/KeyEvent.html JavaFX`s KeyEvent]]
+	 * 
+	 * @param handler function that manipulates a ScalaFX`s KeyEvent
+	 * @return a JavaFX's EventHandler that manipulates a JavaFX`s KeyEvent
+	 */
+	implicit def keyEventClosureWrapper(handler: (sfxsi.KeyEvent) => Unit) = new jfxe.EventHandler[jfxsi.KeyEvent] {
+		def handle(event: jfxsi.KeyEvent) {
+			handler(event)
+		}
+	}
 
-    def handle(event: jfxe.ActionEvent) {
-      handler(event)
-    }
-  }
+	/**
+	 * Converts a Function that manipulates a [[scalafx.event.ActionEvent]] 
+	 * and returns a [[scala.Unit]] in a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/event/EventHandler.html JavaFX`s EventHandler]] 
+	 * that manipulates a 
+	 * [[http://docs.oracle.com/javafx/2/api/javafx/event/ActionEvent.html JavaFX`s ActionEvent]]
+	 * 
+	 * @param handler function that manipulates a ScalaFX`s ActionEvent
+	 * @return a JavaFX's EventHandler that manipulates a JavaFX`s ActionEvent
+	 */
+	implicit def actionEventClosureWrapper(handler: (ActionEvent) => Unit) = new jfxe.EventHandler[jfxe.ActionEvent] {
+		def handle(event: jfxe.ActionEvent) {
+			handler(event)
+		}
+	}
 }
