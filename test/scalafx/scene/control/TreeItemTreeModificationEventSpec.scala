@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,47 +24,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package scalafx.scene.control
 
-package scalafx
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-import animation.AnimationIncludes
-import beans.BeanIncludes
-import collections.CollectionIncludes
-import event.EventIncludes
-import geometry.GeometryIncludes
-import scene.input.InputIncludes
-import scene.media.MediaIncludes
-import scene.transform.TransformIncludes
-import scene.web.WebIncludes
-import stage.StageIncludes
-import scene.SceneIncludes
-import util.UtilIncludes
-import util.converter.ConverterIncludes
-import concurrent.ConcurrentIncludes
-import scalafx.application.ApplicationIncludes
+import javafx.scene.{control => jfxsc}
+import scalafx.Includes._
+import scalafx.testutil.SimpleSFXDelegateSpec
 
 /**
- * Include file that contains all the necessary declarations for jfx->sfx implicit conversions
- * and other syntactic sugar.
+ * TreeItem.TreeModificationEvent Spec tests.
  *
- * This file is tiered both for modularity and to prioritize the implicits
- * (the order of the withs matter a lot!)
+ *
  */
-object Includes extends Includes
+@RunWith(classOf[JUnitRunner])
+class TreeItemTreeModificationEventSpec[T]
+  extends SimpleSFXDelegateSpec[jfxsc.TreeItem.TreeModificationEvent[T], TreeItem.TreeModificationEvent[T]](classOf[jfxsc.TreeItem.TreeModificationEvent[T]], classOf[TreeItem.TreeModificationEvent[T]]) {
 
-trait Includes
-  extends AnimationIncludes 
-  with CollectionIncludes 
-  with EventIncludes 
-  with SceneIncludes 
-  with BeanIncludes 
-  with UtilIncludes 
-  with GeometryIncludes 
-  with TransformIncludes 
-  with InputIncludes 
-  with StageIncludes 
-  with WebIncludes 
-  with MediaIncludes
-  with ConverterIncludes
-  with ConcurrentIncludes
-  with ApplicationIncludes
+  protected def convertScalaClassToJavaClass(sfxEvent: TreeItem.TreeModificationEvent[T]) = {
+    val jfxEvent: jfxsc.TreeItem.TreeModificationEvent[T] = sfxEvent
+    jfxEvent
+  }
+
+  override def getJavaClassInstance =
+    new jfxsc.TreeItem.TreeModificationEvent[T](null, new jfxsc.TreeItem[T])
+
+  protected def convertJavaClassToScalaClass(jfxEvent: jfxsc.TreeItem.TreeModificationEvent[T]) = {
+    val sfxEvent: TreeItem.TreeModificationEvent[T] = jfxEvent
+    sfxEvent
+  }
+
+}
