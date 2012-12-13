@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,44 +24,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package scalafx.animation
-
-import collection.JavaConversions._
-import javafx.{ animation => jfxa }
+package scalafx.scene.input
+import javafx.scene.{ input => jfxsi }
 import scalafx.util.SFXDelegate
 
-object Timeline extends AnimationStatics {
-  implicit def sfxTimeline2jfx(v: Timeline) = v.delegate
+object RotateEvent {
+  implicit def sfxRotateEvent2jfx(re: RotateEvent) = re.delegate
 
-  def apply(keyFrames: Seq[_ <: KeyFrame]) = {
-      def kf = keyFrames
-    new Timeline {
-      keyFrames = kf
-    }
-  }
+  /**
+   * Common supertype for all rotate event types.
+   */
+  val ANY = jfxsi.RotateEvent.ANY
+
+  /**
+   * This event occurs when user performs a rotating gesture such as dragging two fingers around each other.
+   */
+  val ROTATE = jfxsi.RotateEvent.ROTATE
+
+  /**
+   * This event occurs when a rotating gesture ends.
+   */
+  val ROTATION_FINISHED = jfxsi.RotateEvent.ROTATION_FINISHED
+
+  /**
+   * This event occurs when a rotating gesture is detected.
+   */
+  val ROTATION_STARTED = jfxsi.RotateEvent.ROTATION_STARTED
+
 }
 
-class Timeline(override val delegate: jfxa.Timeline = new jfxa.Timeline())
-  extends Animation(delegate)
-  with SFXDelegate[jfxa.Timeline] {
+/**
+ * Wraps [[http://docs.oracle.com/javafx/2/api/javafx/scene/input/RotateEvent.html]]
+ */
+class RotateEvent(override val delegate: jfxsi.RotateEvent)
+  extends InputEvent(delegate)
+  with SFXDelegate[jfxsi.RotateEvent] {
 
-  def this(targetFramerate: Double) =
-    this(new jfxa.Timeline(targetFramerate))
+  /**
+   * Gets the rotation angle of this event.
+   */
+  def angle = delegate.getAngle
 
-  def this(targetFramerate: Double, keyFrames: Seq[_ <: KeyFrame]) = {
-    // HACK: for some reason this does not compile with scala 2.10.0-M7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map(_.delegate).toArray: _*))
-    // solution from https://code.google.com/p/scalafx/issues/detail?id=7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map { kf: KeyFrame => kf.delegate } : _*))
-    this(new jfxa.Timeline(targetFramerate, keyFrames.map((keyFrame:KeyFrame) => keyFrame.delegate).toArray: _*))
-  }
-
-    
-  def keyFrames = delegate.getKeyFrames
-  def keyFrames_=(kfs: Seq[_ <: KeyFrame]) {
-    val mapped = kfs.map((x: KeyFrame) => x.delegate)
-    keyFrames.setAll(mapped)
-  }
+  /**
+   * Gets the cumulative rotation angle of this gesture.
+   */
+  def totalAngle = delegate.getTotalAngle
 
 }

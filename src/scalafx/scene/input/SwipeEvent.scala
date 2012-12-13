@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,44 +24,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package scalafx.scene.input
 
-package scalafx.animation
-
-import collection.JavaConversions._
-import javafx.{ animation => jfxa }
+import javafx.scene.{ input => jfxsi }
 import scalafx.util.SFXDelegate
 
-object Timeline extends AnimationStatics {
-  implicit def sfxTimeline2jfx(v: Timeline) = v.delegate
+object SwipeEvent {
+  implicit def sfxSwipeEvent2jfx(se: SwipeEvent) = se.delegate
 
-  def apply(keyFrames: Seq[_ <: KeyFrame]) = {
-      def kf = keyFrames
-    new Timeline {
-      keyFrames = kf
-    }
-  }
+  /**
+   * Common supertype for all Swipe event types.
+   */
+  val ANY = jfxsi.SwipeEvent.ANY
+
+  /**
+   * This event occurs when user performs downward swipe gesture.
+   */
+  val SWIPE_DOWN = jfxsi.SwipeEvent.SWIPE_DOWN
+
+  /**
+   * This event occurs when user performs leftward swipe gesture.
+   */
+  val SWIPE_LEFT = jfxsi.SwipeEvent.SWIPE_LEFT
+
+  /**
+   * This event occurs when user performs rightward swipe gesture.
+   */
+  val SWIPE_RIGHT = jfxsi.SwipeEvent.SWIPE_RIGHT
+
+  /**
+   * This event occurs when user performs upward swipe gesture.
+   */
+  val SWIPE_UP = jfxsi.SwipeEvent.SWIPE_UP
+
 }
 
-class Timeline(override val delegate: jfxa.Timeline = new jfxa.Timeline())
-  extends Animation(delegate)
-  with SFXDelegate[jfxa.Timeline] {
+/**
+ * Wraps [[http://docs.oracle.com/javafx/2/api/javafx/scene/input/SwipeEvent.html]]
+ */
+class SwipeEvent(override val delegate: jfxsi.SwipeEvent)
+  extends GestureEvent(delegate)
+  with SFXDelegate[jfxsi.SwipeEvent] {
 
-  def this(targetFramerate: Double) =
-    this(new jfxa.Timeline(targetFramerate))
-
-  def this(targetFramerate: Double, keyFrames: Seq[_ <: KeyFrame]) = {
-    // HACK: for some reason this does not compile with scala 2.10.0-M7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map(_.delegate).toArray: _*))
-    // solution from https://code.google.com/p/scalafx/issues/detail?id=7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map { kf: KeyFrame => kf.delegate } : _*))
-    this(new jfxa.Timeline(targetFramerate, keyFrames.map((keyFrame:KeyFrame) => keyFrame.delegate).toArray: _*))
-  }
-
-    
-  def keyFrames = delegate.getKeyFrames
-  def keyFrames_=(kfs: Seq[_ <: KeyFrame]) {
-    val mapped = kfs.map((x: KeyFrame) => x.delegate)
-    keyFrames.setAll(mapped)
-  }
+  /**
+   * Gets number of touch points that caused this event.
+   */
+  def touchCount = delegate.getTouchCount
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,44 +24,51 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package scalafx.scene.input
 
-package scalafx.animation
-
-import collection.JavaConversions._
-import javafx.{ animation => jfxa }
+import javafx.scene.{ input => jfxsi }
 import scalafx.util.SFXDelegate
 
-object Timeline extends AnimationStatics {
-  implicit def sfxTimeline2jfx(v: Timeline) = v.delegate
+object ZoomEvent {
+  implicit def sfxZoomEvent2jfx(ze: ZoomEvent) = ze.delegate
 
-  def apply(keyFrames: Seq[_ <: KeyFrame]) = {
-      def kf = keyFrames
-    new Timeline {
-      keyFrames = kf
-    }
-  }
+  /**
+   * Common supertype for all Zoom event types.
+   */
+  val ANY = jfxsi.ZoomEvent.ANY
+
+  /**
+   * This event occurs when user performs a zooming gesture such as dragging two fingers apart.
+   */
+  def ZOOM = jfxsi.ZoomEvent.ZOOM
+
+  /**
+   * This event occurs when a zooming gesture is detected.
+   */
+  def ZOOM_STARTED = jfxsi.ZoomEvent.ZOOM_STARTED
+
+  /**
+   * This event occurs when a zooming gesture ends.
+   */
+  def ZOOM_FINISHED = jfxsi.ZoomEvent.ZOOM_FINISHED
+
 }
 
-class Timeline(override val delegate: jfxa.Timeline = new jfxa.Timeline())
-  extends Animation(delegate)
-  with SFXDelegate[jfxa.Timeline] {
+/**
+ * Wraps [[http://docs.oracle.com/javafx/2/api/javafx/scene/input/ZoomEvent.html]]
+ */
+class ZoomEvent(override val delegate: jfxsi.ZoomEvent)
+  extends GestureEvent(delegate)
+  with SFXDelegate[jfxsi.ZoomEvent] {
 
-  def this(targetFramerate: Double) =
-    this(new jfxa.Timeline(targetFramerate))
+  /**
+   * Gets the zooming amount of this gesture.
+   */
+  def totalZoomFactor = delegate.getTotalZoomFactor()
 
-  def this(targetFramerate: Double, keyFrames: Seq[_ <: KeyFrame]) = {
-    // HACK: for some reason this does not compile with scala 2.10.0-M7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map(_.delegate).toArray: _*))
-    // solution from https://code.google.com/p/scalafx/issues/detail?id=7
-    // this(new jfxa.Timeline(targetFramerate, keyFrames.map { kf: KeyFrame => kf.delegate } : _*))
-    this(new jfxa.Timeline(targetFramerate, keyFrames.map((keyFrame:KeyFrame) => keyFrame.delegate).toArray: _*))
-  }
-
-    
-  def keyFrames = delegate.getKeyFrames
-  def keyFrames_=(kfs: Seq[_ <: KeyFrame]) {
-    val mapped = kfs.map((x: KeyFrame) => x.delegate)
-    keyFrames.setAll(mapped)
-  }
+  /**
+   * Gets the zooming amount of this event.
+   */
+  def zoomFactor = delegate.getZoomFactor()
 
 }
