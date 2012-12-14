@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,49 +25,23 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx
+package scalafx.geometry
 
-import application.JFXApp
-import scalafx.geometry.{Pos, VPos}
-import scalafx.scene.paint.Color
-import scalafx.scene.paint.Color._
-import scene.Scene
-import scene.control.Accordion
-import scene.control.Label
-import scene.control.ScrollPane
-import scene.control.TitledPane
-import scene.layout.HBox
-import scene.shape.Circle
-import scene.text.Font
-import scene.text.Text
-import stage.Stage
+import javafx.{geometry => jfxg}
+import scalafx.util.SFXEnumDelegate
 
-object LayoutDemo extends JFXApp {
-  val hello = new Accordion {
-    panes = List(
-      new TitledPane {
-        content = new Label { text = "Hello" }
-      }
-    )
-  }
+/** Wrapper for [[javafx.geometry.Orientation]] */
+object Orientation {
+  implicit def sfxOrientation2jfx(c: Orientation) = c.delegate
 
-  val hbox1 = new HBox { content=List(hello, new Label { text = "Goodbye" }) }
-  val hbox2 = new HBox { content=List(new Circle { radius=20 }, new Label { text = "Strange" }) }
+  implicit def jfxOrientation2sfx(c: jfxg.Orientation) = Orientation(c)
 
-  val charm = new Text("charm") { font = new Font(24); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
-  val strange = new Text("strange") { font = new Font(12); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
+  val HORIZONTAL = new Orientation(jfxg.Orientation.HORIZONTAL)
+  val VERTICAL = new Orientation(jfxg.Orientation.VERTICAL)
 
-  stage = new Stage {
-    width = 1024
-    height = 768
-    scene = new Scene {
-      content = new ScrollPane {
-        content = new HBox {
-          alignment = Pos.BASELINE_LEFT
-          fill = Color.BLUE
-          content = List(charm, strange)
-        }
-      }
-    }
-  }
+  def valueOf(name: String): Orientation = jfxg.Orientation.valueOf(name)
+
+  def values = List(HORIZONTAL, VERTICAL)
 }
+
+case class Orientation(override val delegate: jfxg.Orientation) extends SFXEnumDelegate[jfxg.Orientation]
