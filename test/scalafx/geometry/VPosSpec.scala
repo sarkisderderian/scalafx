@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2012, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,49 +25,46 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx
+package scalafx.geometry
 
-import application.JFXApp
-import scalafx.geometry.{Pos, VPos}
-import scalafx.scene.paint.Color
-import scalafx.scene.paint.Color._
-import scene.Scene
-import scene.control.Accordion
-import scene.control.Label
-import scene.control.ScrollPane
-import scene.control.TitledPane
-import scene.layout.HBox
-import scene.shape.Circle
-import scene.text.Font
-import scene.text.Text
-import stage.Stage
+import javafx.{geometry => jfxg}
+import org.junit.runner.RunWith
+import org.scalatest.FlatSpec
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
+import scalafx.testutil.PropertyComparator
 
-object LayoutDemo extends JFXApp {
-  val hello = new Accordion {
-    panes = List(
-      new TitledPane {
-        content = new Label { text = "Hello" }
-      }
-    )
+/** Tests for [[scalafx.geometry.VPos]]. */
+@RunWith(classOf[JUnitRunner])
+class VPosSpec extends FlatSpec with ShouldMatchers with PropertyComparator {
+
+  val javaClass = classOf[jfxg.VPos]
+  val scalaClass = classOf[VPos]
+
+  "A %s".format(scalaClass.getSimpleName) should "declare all public static methods of " + javaClass.getName in {
+    compareStaticMethods(javaClass, scalaClass)
   }
 
-  val hbox1 = new HBox { content=List(hello, new Label { text = "Goodbye" }) }
-  val hbox2 = new HBox { content=List(new Circle { radius=20 }, new Label { text = "Strange" }) }
+  it should "have the same number of values as javafx.geometry.VPos" in {
+    VPos.values.size should equal(jfxg.VPos.values.length)
+  }
 
-  val charm = new Text("charm") { font = new Font(24); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
-  val strange = new Text("strange") { font = new Font(12); alignment = Pos.BASELINE_LEFT; textOrigin = VPos.BASELINE }
+  it should "lookup the same values as javafx.geometry.VPos" in {
+    for (v <- jfxg.VPos.values) {
+      val sv: VPos = VPos.valueOf(v.toString)
+      sv should equal(v)
+    }
 
-  stage = new Stage {
-    width = 1024
-    height = 768
-    scene = new Scene {
-      content = new ScrollPane {
-        content = new HBox {
-          alignment = Pos.BASELINE_LEFT
-          fill = Color.BLUE
-          content = List(charm, strange)
-        }
-      }
+    for (sv <- VPos.values) {
+      val v = jfxg.VPos.valueOf(sv.toString)
+      v should equal(sv.delegate)
+    }
+  }
+
+  it should "return the same `toString`" in {
+    for (jv <- jfxg.VPos.values) {
+      val sv: VPos = VPos.valueOf(jv.toString)
+      sv.toString should equal(jv.toString)
     }
   }
 }
