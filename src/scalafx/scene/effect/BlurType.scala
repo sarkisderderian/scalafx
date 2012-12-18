@@ -25,21 +25,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene.effect
 
-import javafx.{geometry => jfxg}
+import javafx.scene.{effect => jfxse}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[scalafx.scene.effect.BlurType]] */
+object BlurType extends SFXEnumDelegateCompanion[jfxse.BlurType, BlurType] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val GAUSSIAN = new BlurType(jfxse.BlurType.GAUSSIAN)
+  val ONE_PASS_BOX = new BlurType(jfxse.BlurType.ONE_PASS_BOX)
+  val THREE_PASS_BOX = new BlurType(jfxse.BlurType.THREE_PASS_BOX)
+  val TWO_PASS_BOX = new BlurType(jfxse.BlurType.TWO_PASS_BOX)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(ONE_PASS_BOX, TWO_PASS_BOX, THREE_PASS_BOX, GAUSSIAN)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class BlurType(override val delegate: jfxse.BlurType) extends SFXEnumDelegate[jfxse.BlurType]

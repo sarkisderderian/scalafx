@@ -25,21 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene
 
-import javafx.{geometry => jfxg}
-import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
+import javafx.{scene => jfxs}
+import scalafx.util.{SFXEnumDelegate, SFXEnumDelegateCompanion}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[javafx.scene.CacheHint]] */
+object CacheHint extends SFXEnumDelegateCompanion[jfxs.CacheHint, CacheHint] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val DEFAULT = new CacheHint(jfxs.CacheHint.DEFAULT)
+  val QUALITY = new CacheHint(jfxs.CacheHint.QUALITY)
+  val ROTATE = new CacheHint(jfxs.CacheHint.ROTATE)
+  val SCALE = new CacheHint(jfxs.CacheHint.SCALE)
+  val SCALE_AND_ROTATE = new CacheHint(jfxs.CacheHint.SCALE_AND_ROTATE)
+  val SPEED = new CacheHint(jfxs.CacheHint.SPEED)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(DEFAULT, SPEED, QUALITY, SCALE, ROTATE, SCALE_AND_ROTATE)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class CacheHint(override val delegate: jfxs.CacheHint) extends SFXEnumDelegate[jfxs.CacheHint]

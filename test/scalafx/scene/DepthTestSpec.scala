@@ -25,21 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene
 
-import javafx.{geometry => jfxg}
-import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
-
-
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
-
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
-
-  lazy val values = List(LEFT, CENTER, RIGHT)
-}
+import javafx.{scene => jfxs}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import scalafx.testutil.AbstractSFXEnumDelegateSpec
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+/** Tests for [[scalafx.scene.DepthTest]]. */
+@RunWith(classOf[JUnitRunner])
+class DepthTestSpec extends AbstractSFXEnumDelegateSpec[jfxs.DepthTest, DepthTest](
+  javaClass = classOf[jfxs.DepthTest],
+  scalaClass = classOf[DepthTest],
+  javaValuesFun = Unit => jfxs.DepthTest.values,
+  javaValueOfFun = (s: String) => jfxs.DepthTest.valueOf(s),
+  scalaValuesFun = Unit => DepthTest.values,
+  scalaValueOfFun = (s: String) => DepthTest.valueOf(s)
+)
