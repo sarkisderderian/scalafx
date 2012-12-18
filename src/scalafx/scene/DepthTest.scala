@@ -25,21 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene
 
-import javafx.{geometry => jfxg}
+import javafx.{scene => jfxs}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[javafx.scene.DepthTest]] */
+object DepthTest extends SFXEnumDelegateCompanion[jfxs.DepthTest, DepthTest] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val DISABLE = new DepthTest(jfxs.DepthTest.DISABLE)
+  val ENABLE = new DepthTest(jfxs.DepthTest.ENABLE)
+  val INHERIT = new DepthTest(jfxs.DepthTest.INHERIT)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(DISABLE, ENABLE, INHERIT)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class DepthTest(override val delegate: jfxs.DepthTest) extends SFXEnumDelegate[jfxs.DepthTest]

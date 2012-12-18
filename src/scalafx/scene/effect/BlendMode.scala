@@ -25,21 +25,38 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene.effect
 
-import javafx.{geometry => jfxg}
+import javafx.scene.{effect => jfxse}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[scalafx.scene.effect.BlendMode]] */
+object BlendMode extends SFXEnumDelegateCompanion[jfxse.BlendMode, BlendMode] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val ADD = new BlendMode(jfxse.BlendMode.ADD)
+  val BLUE = new BlendMode(jfxse.BlendMode.BLUE)
+  val COLOR_BURN = new BlendMode(jfxse.BlendMode.COLOR_BURN)
+  val COLOR_DODGE = new BlendMode(jfxse.BlendMode.COLOR_DODGE)
+  val DARKEN = new BlendMode(jfxse.BlendMode.DARKEN)
+  val DIFFERENCE = new BlendMode(jfxse.BlendMode.DIFFERENCE)
+  val EXCLUSION = new BlendMode(jfxse.BlendMode.EXCLUSION)
+  val GREEN = new BlendMode(jfxse.BlendMode.GREEN)
+  val HARD_LIGHT = new BlendMode(jfxse.BlendMode.HARD_LIGHT)
+  val LIGHTEN = new BlendMode(jfxse.BlendMode.LIGHTEN)
+  val MULTIPLY = new BlendMode(jfxse.BlendMode.MULTIPLY)
+  val OVERLAY = new BlendMode(jfxse.BlendMode.OVERLAY)
+  val RED = new BlendMode(jfxse.BlendMode.RED)
+  val SCREEN = new BlendMode(jfxse.BlendMode.SCREEN)
+  val SOFT_LIGHT = new BlendMode(jfxse.BlendMode.SOFT_LIGHT)
+  val SRC_ATOP = new BlendMode(jfxse.BlendMode.SRC_ATOP)
+  val SRC_OVER = new BlendMode(jfxse.BlendMode.SRC_OVER)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(
+    SRC_OVER, SRC_ATOP, ADD, MULTIPLY, SCREEN, OVERLAY, DARKEN, LIGHTEN, COLOR_DODGE, COLOR_BURN,
+    HARD_LIGHT, SOFT_LIGHT, DIFFERENCE, EXCLUSION, RED, GREEN, BLUE
+  )
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class BlendMode(override val delegate: jfxse.BlendMode) extends SFXEnumDelegate[jfxse.BlendMode]

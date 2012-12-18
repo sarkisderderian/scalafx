@@ -25,21 +25,27 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene.control
 
-import javafx.{geometry => jfxg}
+import javafx.scene.{control => jfxsc}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[scalafx.scene.control.OverrunStyle]] */
+object OverrunStyle extends SFXEnumDelegateCompanion[jfxsc.OverrunStyle, OverrunStyle] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val CENTER_ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.CENTER_ELLIPSIS)
+  val CENTER_WORD_ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.CENTER_WORD_ELLIPSIS)
+  val CLIP = new OverrunStyle(jfxsc.OverrunStyle.CLIP)
+  val ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.ELLIPSIS)
+  val LEADING_ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.LEADING_ELLIPSIS)
+  val LEADING_WORD_ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.LEADING_WORD_ELLIPSIS)
+  val WORD_ELLIPSIS = new OverrunStyle(jfxsc.OverrunStyle.WORD_ELLIPSIS)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(
+    CLIP, ELLIPSIS, WORD_ELLIPSIS, CENTER_ELLIPSIS, CENTER_WORD_ELLIPSIS, LEADING_ELLIPSIS, LEADING_WORD_ELLIPSIS
+  )
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class OverrunStyle(override val delegate: jfxsc.OverrunStyle) extends SFXEnumDelegate[jfxsc.OverrunStyle]

@@ -25,21 +25,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene.control
 
-import javafx.{geometry => jfxg}
+import javafx.scene.{control => jfxsc}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[scalafx.scene.control.ContentDisplay]] */
+object ContentDisplay extends SFXEnumDelegateCompanion[jfxsc.ContentDisplay, ContentDisplay] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val BOTTOM = new ContentDisplay(jfxsc.ContentDisplay.BOTTOM)
+  val CENTER = new ContentDisplay(jfxsc.ContentDisplay.CENTER)
+  val GRAPHIC_ONLY = new ContentDisplay(jfxsc.ContentDisplay.GRAPHIC_ONLY)
+  val LEFT = new ContentDisplay(jfxsc.ContentDisplay.LEFT)
+  val RIGHT = new ContentDisplay(jfxsc.ContentDisplay.RIGHT)
+  val TEXT_ONLY = new ContentDisplay(jfxsc.ContentDisplay.TEXT_ONLY)
+  val TOP = new ContentDisplay(jfxsc.ContentDisplay.TOP)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(TOP, RIGHT, BOTTOM, LEFT, CENTER, GRAPHIC_ONLY, TEXT_ONLY)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class ContentDisplay(override val delegate: jfxsc.ContentDisplay) extends SFXEnumDelegate[jfxsc.ContentDisplay]

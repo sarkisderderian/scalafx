@@ -25,21 +25,32 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
-
-import javafx.{geometry => jfxg}
-import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
+package scalafx.util
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Helper for creating JavaFX enum wrapper companion objects. */
+trait SFXEnumDelegateCompanion[E <: java.lang.Enum[E], S <: SFXDelegate[E]] {
+  /**
+   * Converts a SFXEnumDelegate to its respective JavaFX Enum
+   */
+  implicit def sfxEnum2jfx(s: S): E = s.delegate
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  /**
+   * Converts a JavaFX Enum to its respective SFXEnumDelegate
+   */
+  implicit def jfxEnum2sfx(e: E): S = javaEnumToScalaFXEnum(e)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  private lazy val javaEnumToScalaFXEnum = values.map(e => (e.delegate, e)).toMap
+
+  private lazy val nameToEnum = javaEnumToScalaFXEnum.map(e => (e._1.name(), e._2))
+
+  /**
+   * Returns an Traversable containing the constants of this enum type, in the order they are declared.
+   */
+  val values: List[S]
+
+  /**
+   * Returns the enum constant of this type with the specified name.
+   */
+  def valueOf(name: String) = nameToEnum(name)
 }
-
-
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]

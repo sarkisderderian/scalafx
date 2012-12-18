@@ -25,21 +25,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene.control
 
-import javafx.{geometry => jfxg}
+import javafx.scene.{control => jfxsc}
 import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/** Wrapper for [[scalafx.scene.control.SelectionMode]] */
+object SelectionMode extends SFXEnumDelegateCompanion[jfxsc.SelectionMode, SelectionMode] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val MULTIPLE = new SelectionMode(jfxsc.SelectionMode.MULTIPLE)
+  val SINGLE = new SelectionMode(jfxsc.SelectionMode.SINGLE)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(SINGLE, MULTIPLE)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class SelectionMode(override val delegate: jfxsc.SelectionMode) extends SFXEnumDelegate[jfxsc.SelectionMode]

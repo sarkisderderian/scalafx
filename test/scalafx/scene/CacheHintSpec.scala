@@ -25,21 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.scene
 
-import javafx.{geometry => jfxg}
-import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
-
-
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
-
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
-
-  lazy val values = List(LEFT, CENTER, RIGHT)
-}
+import javafx.{scene => jfxs}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import scalafx.testutil.AbstractSFXEnumDelegateSpec
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+/** Tests for [[scalafx.scene.CacheHint]]. */
+@RunWith(classOf[JUnitRunner])
+class CacheHintSpec extends AbstractSFXEnumDelegateSpec[jfxs.CacheHint, CacheHint](
+  javaClass = classOf[jfxs.CacheHint],
+  scalaClass = classOf[CacheHint],
+  javaValuesFun = Unit => jfxs.CacheHint.values,
+  javaValueOfFun = (s: String) => jfxs.CacheHint.valueOf(s),
+  scalaValuesFun = Unit => CacheHint.values,
+  scalaValueOfFun = (s: String) => CacheHint.valueOf(s)
+)

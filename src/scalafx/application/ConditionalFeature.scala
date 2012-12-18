@@ -25,21 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package scalafx.geometry
+package scalafx.application
 
-import javafx.{geometry => jfxg}
-import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
+import javafx.{application => jfxa}
+import scalafx.util.{SFXEnumDelegate, SFXEnumDelegateCompanion}
 
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
+/**
+ * ConditionalFeature
+ */
+/** Wrapper for [[javafx.application.ConditionalFeature]] */
+object ConditionalFeature extends SFXEnumDelegateCompanion[jfxa.ConditionalFeature, ConditionalFeature] {
 
-  val CENTER = new HPos(jfxg.HPos.CENTER)
-  val LEFT = new HPos(jfxg.HPos.LEFT)
-  val RIGHT = new HPos(jfxg.HPos.RIGHT)
+  val SCENE3D = new ConditionalFeature(jfxa.ConditionalFeature.SCENE3D)
+  val EFFECT = new ConditionalFeature(jfxa.ConditionalFeature.EFFECT)
+  val SHAPE_CLIP = new ConditionalFeature(jfxa.ConditionalFeature.SHAPE_CLIP)
+  val INPUT_METHOD = new ConditionalFeature(jfxa.ConditionalFeature.INPUT_METHOD)
+  val TRANSPARENT_WINDOW = new ConditionalFeature(jfxa.ConditionalFeature.TRANSPARENT_WINDOW)
 
-  lazy val values = List(LEFT, CENTER, RIGHT)
+  lazy val values = List(SCENE3D, EFFECT, SHAPE_CLIP, INPUT_METHOD, TRANSPARENT_WINDOW)
 }
 
 
-sealed case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+sealed case class ConditionalFeature(override val delegate: jfxa.ConditionalFeature) extends SFXEnumDelegate[jfxa.ConditionalFeature]
