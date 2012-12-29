@@ -30,27 +30,22 @@
 package scalafx.geometry
 
 import javafx.{geometry => jfxg}
-import scalafx.util.SFXDelegate
+import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
-//I think it might be better to implemented this way rather than extending Enumeration
-object Side {
-  implicit def sfxSide2jfx(c: Side) = c.delegate
-  
+
+/** Wrapper for [[javafx.geometry.Side]] */
+object Side extends SFXEnumDelegateCompanion[jfxg.Side, Side] {
   val BOTTOM = new Side(jfxg.Side.BOTTOM)
   val LEFT = new Side(jfxg.Side.LEFT)
   val RIGHT = new Side(jfxg.Side.RIGHT)
   val TOP = new Side(jfxg.Side.TOP)
-  
-  def valueOf(name: String) = name match {
-    case "BOTTOM" => BOTTOM
-    case "LEFT" => LEFT
-    case "RIGHT" => RIGHT
-    case "TOP" => TOP
-  }
-  def values = List(BOTTOM, LEFT, RIGHT, TOP)
+
+  protected def unsortedValues: Array[Side] = Array(TOP, BOTTOM, LEFT, RIGHT)
 }
 
-class Side(override val delegate:jfxg.Side) extends SFXDelegate[jfxg.Side] {
-  def isHorizontal = delegate.isHorizontal()
-  def isVertical = delegate.isVertical()
+
+sealed case class Side(override val delegate: jfxg.Side) extends SFXEnumDelegate[jfxg.Side] {
+  def isHorizontal = delegate.isHorizontal
+
+  def isVertical = delegate.isVertical
 }
