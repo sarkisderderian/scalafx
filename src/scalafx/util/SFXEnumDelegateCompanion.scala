@@ -24,25 +24,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package scalafx.geometry
-
-import javafx.{ geometry => jfxg }
-import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+package scalafx.util
 
 /**
- * BoundingBox Spec tests.
+ * Base trait for all Companion objects [[SFXEnumDelegate]] subclasses. It mirrors static methods for
+ * [[http://docs.oracle.com/javase/7/docs/api/java/lang/Enum.html]]
  *
+ * @tparam E Original JavaFX `enum`
+ * @tparam S [[SFXEnumDelegate]] that wrappers E
  */
-@RunWith(classOf[JUnitRunner])
-class BoundingBoxSpec
-  extends AbstractSFXDelegateSpec[jfxg.BoundingBox, BoundingBox, jfxg.BoundingBoxBuilder[_]](classOf[jfxg.BoundingBox], classOf[BoundingBox], classOf[jfxg.BoundingBoxBuilder[_]]) {
+trait SFXEnumDelegateCompanion[E <: java.lang.Enum[E], S <: SFXEnumDelegate[E]] {
+  /**
+   * Converts a SFXEnumDelegate to its respective JavaFX Enum
+   */
+  implicit def sfxEnum2jfx(s: S): E = s.delegate
 
-  override protected def getScalaClassInstance = new BoundingBox(0, 0, 0, 0)
+  /**
+   * Converts a JavaFX Enum to its respective SFXEnumDelegate
+   */
+  def jfxEnum2sfx(e: E): S = values.find(_.delegate == e).get
 
-  override protected def getJavaClassInstance = new jfxg.BoundingBox(0, 0, 0, 0)
+  /**
+   * Contain constants which will be source for `values` List
+   */
+  protected def unsortedValues: Array[S]
+
+  /**
+   * Returns a List containing the constants of this `enum` type, in the order they are declared.
+   */
+  lazy val values: List[S] = unsortedValues.sortWith(_.delegate.ordinal < _.delegate.ordinal).toList
+
+  /**
+   * Returns the `enum` constant of this type with the specified name.
+   */
+  def apply(name: String) = values.find(_.name == name) match {
+    case Some(e) => e
+    case None    => throw new IllegalArgumentException("No enum constant %s.%s".format(values.head.getClass().getName, name))
+  }
 
 }

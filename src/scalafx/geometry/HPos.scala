@@ -24,25 +24,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package scalafx.geometry
 
-import javafx.{geometry => jfxg}
+import javafx.{ geometry => jfxg }
 import scalafx.util.SFXEnumDelegate
+import scalafx.util.SFXEnumDelegateCompanion
 
-/** Wrapper for [[javafx.geometry.HPos]] */
-object HPos {
-  implicit def sfxHPos2jfx(c: HPos) = c.delegate
+object HPos
+  extends SFXEnumDelegateCompanion[jfxg.HPos, HPos] {
 
-  implicit def jfxHPos2sfx(c: jfxg.HPos) = HPos(c)
-
+  /**
+   * Indicates centered horizontal position.
+   */
   val CENTER = new HPos(jfxg.HPos.CENTER)
+
+  /**
+   * Indicates left horizontal position.
+   */
   val LEFT = new HPos(jfxg.HPos.LEFT)
+
+  /**
+   * Indicates right horizontal position.
+   */
   val RIGHT = new HPos(jfxg.HPos.RIGHT)
 
-  def valueOf(name: String): HPos = jfxg.HPos.valueOf(name)
+  def unsortedValues = Array(CENTER, LEFT, RIGHT)
 
-  def values = List(CENTER, LEFT, RIGHT)
 }
 
-case class HPos(override val delegate: jfxg.HPos) extends SFXEnumDelegate[jfxg.HPos]
+/**
+ * Wrapper for [[http://docs.oracle.com/javafx/2/api/javafx/geometry/HPos.html]]
+ */
+sealed case class HPos(override val delegate: jfxg.HPos)
+  extends SFXEnumDelegate[jfxg.HPos]
