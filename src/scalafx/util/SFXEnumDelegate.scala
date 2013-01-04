@@ -24,17 +24,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package scalafx.util
 
 
-/** Helper for creating Java enum wrappers. */
-trait SFXEnumDelegate[+D <: Object] extends SFXDelegate[D] {
+/** Base trait for JavaFX `enum` wrappers.
+  *
+  * @tparam E Original JavaFX `enum`
+  */
+trait SFXEnumDelegate[E <: java.lang.Enum[E]]
+  extends SFXDelegate[E] {
 
   /** Return the same string value as `delegate`.
     *
     * This is important since we want to be able to look it up using enums `valueOf` method.
     * Default `toString` provided by the `SFXDelegate` prepends "[SFX]"
-   */
+    */
   override def toString = delegate.toString
 }

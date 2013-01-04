@@ -26,29 +26,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package scalafx.geometry
 
 import javafx.{geometry => jfxg}
-import scalafx.util.SFXEnumDelegate
+import scalafx.util.{SFXEnumDelegateCompanion, SFXEnumDelegate}
 
-//I think it might be better to implemented this way rather than extending Enumeration
-object Side {
-  implicit def sfxSide2jfx(c: Side) = c.delegate
-  implicit def jfxSide2sfx(c: jfxg.Side) = Side(c)
+
+/** Wrapper for [[javafx.geometry.Side]] */
+object Side
+  extends SFXEnumDelegateCompanion[jfxg.Side, Side] {
 
   val BOTTOM = new Side(jfxg.Side.BOTTOM)
   val LEFT = new Side(jfxg.Side.LEFT)
   val RIGHT = new Side(jfxg.Side.RIGHT)
   val TOP = new Side(jfxg.Side.TOP)
 
-  def valueOf(name: String) : Side = jfxg.Side.valueOf(name)
-
-  def values = List(BOTTOM, LEFT, RIGHT, TOP)
+  protected override def unsortedValues: Array[Side] = Array(TOP, BOTTOM, LEFT, RIGHT)
 }
 
 
-case class Side(override val delegate: jfxg.Side) extends SFXEnumDelegate[jfxg.Side] {
+sealed case class Side(override val delegate: jfxg.Side)
+  extends SFXEnumDelegate[jfxg.Side] {
+  
+  /** Indicates whether this is horizontal side of a rectangle (returns true for `TOP` and `BOTTOM`). */
   def isHorizontal = delegate.isHorizontal
+  
+  /** Indicates whether this is vertical side of a rectangle (returns true for `LEFT` and `RIGHT`). */
   def isVertical = delegate.isVertical
 }
