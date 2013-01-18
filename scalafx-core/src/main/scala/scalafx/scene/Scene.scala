@@ -54,10 +54,6 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
     root() = v
   }
 
-  def root_=(v: Parent) {
-    root() = v.delegate
-  }
-
   def getChildren = root.value match {
     case group: jfxs.Group => group.getChildren
     case pane: jfxsl.Pane => pane.getChildren
