@@ -1,0 +1,24 @@
+syntax: glob
+
+*.class
+build/
+out/
+lib/
+.settings/
+.cache
+.metadata/
+.idea/
+.idea/*
+.gradle/
+.history
+target
+lib_managed
+project/boot
+project/target
+*.iml
+*.log
+*.bak
+scalafx-core/.classpath
+scalafx-core/.project
+scalafx-demos/.classpath
+scalafx-demos/.project
