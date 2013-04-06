@@ -43,9 +43,11 @@ import scalafx.delegate.SFXDelegate
  */
 object ObservableMap extends MutableMapFactory[ObservableMap] {
   /**
-   * Extracts a JavaFX's $OM from a ScalaFX's $OM.
+   * Extracts a JavaFX's [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableMap.html $OM]] from a 
+   * ScalaFX's $OM.
    *
    * @param om ScalaFX's $OM.
+   * @return JavaFX's $OM inside parameter.
    */
   implicit def sfxObservableMap2sfxObservableMap[K, V](om: ObservableMap[K, V]) = om.delegate
 
@@ -96,7 +98,7 @@ object ObservableMap extends MutableMapFactory[ObservableMap] {
 
   /**
    * Creates a empty $OM.
-   * 
+   *
    * @return a Empty [[scalafx.collections.ObservableHashMap]]
    */
   def empty[K, V]: ObservableMap[K, V] = new ObservableHashMap[K, V]
@@ -207,7 +209,7 @@ trait ObservableMap[K, V]
 
   /**
    * This $MAP's size.
-   * 
+   *
    * @return This $MAP's size.
    */
   override def size = delegate.size

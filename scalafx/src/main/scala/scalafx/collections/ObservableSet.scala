@@ -49,6 +49,7 @@ object ObservableSet extends MutableSetFactory[ObservableSet] {
    * Extracts a JavaFX's $OS from a ScalaFX's $OS.
    *
    * @param os ScalaFX's $OS.
+   * @return JavaFX's $OS inside parameter.
    */
   implicit def sfxObservableSet2sfxObservableSet[T](os: ObservableSet[T]) = os.delegate
 
@@ -113,7 +114,7 @@ object ObservableSet extends MutableSetFactory[ObservableSet] {
 }
 
 /**
- * Wrapper class to JavaFX's [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableSet.html ObservableSet]] .
+ * Wrapper class to JavaFX's [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableSet.html $OS]] .
  *
  * @tparam T Type of this $SET
  *
@@ -149,7 +150,7 @@ trait ObservableSet[T]
    * Adds a single element to the set.
    *
    * @param elem the element to be added.
-   * @return The set itself
+   * @return The $SET itself
    */
   def +=(elem: T) = {
     delegate.add(elem)
@@ -160,7 +161,7 @@ trait ObservableSet[T]
    * Removes a single element from this mutable set.
    *
    * @param elem the element to be removed.
-   * @return The set itself
+   * @return The $SET itself
    */
   def -=(elem: T) = {
     delegate.remove(elem)
@@ -168,7 +169,7 @@ trait ObservableSet[T]
   }
 
   /**
-   * Removes all elements from the set. After this operation has completed, the set will be empty.
+   * Removes all elements from the $SET. After this operation has completed, the $SET will be empty.
    */
   override def clear = delegate.clear
 
@@ -177,32 +178,29 @@ trait ObservableSet[T]
    */
   def iterator = new Iterator[T] {
     val it = delegate.iterator
-
     def hasNext = it.hasNext
-
     def next = it.next
   }
 
   /**
-   * @return This set's size.
+   * @return This $SET's size.
    */
   override def size = delegate.size
 
   /**
-   * Tests if some element is contained in this set.
+   * Tests if some element is contained in this $SET.
    *
    * @param elem the element to test for membership.
-   * @return `true` if `elem` is contained in this set, `false` otherwise.
+   * @return `true` if `elem` is contained in this $SET, `false` otherwise.
    */
   def contains(elem: T) = delegate.contains(elem)
 
   import ObservableSet._
 
   /**
-   * Add a change listener.
+   * Add a listener function to $SET's changes. This function '''will handle''' this map's modifications data.
    *
-   * @param op function that will handle this set's modification data to be activated when
-   *           some change was made.
+   * @param op Function that will handle this $OS's modifications data to be activated when some change was made.
    */
   def onChange[J >: T](op: (ObservableSet[T], Change[J]) => Unit) {
     delegate.addListener(new jfxc.SetChangeListener[T] {
@@ -220,10 +218,9 @@ trait ObservableSet[T]
   }
 
   /**
-   * Add a listener function to set's changes. This function will not handle this set's
-   * modification data.
+   * Add a listener function to $SET's changes. This function '''will not handle''' this $SET's modifications data.
    *
-   * @param op No-argument function to be activated when some change in this set was made.
+   * @param op No-argument function to be activated when some change in this $OS was made.
    */
   def onChange(op: => Unit) {
     delegate.addListener(new jfxc.SetChangeListener[T] {
@@ -237,7 +234,7 @@ trait ObservableSet[T]
 
 /**
  * [[scalafx.collections.ObservableSet]] implementation backed for a
- * [[http://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html HashSet]] from Java Collection.
+ * [[http://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html `HashSet`]] from Java Collection.
  *
  * @param delegate JavaFX
  *                 [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableSet.html ObservableSet]]

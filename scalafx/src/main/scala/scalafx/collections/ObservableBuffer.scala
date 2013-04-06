@@ -197,14 +197,15 @@ object ObservableBuffer extends SeqFactory[ObservableBuffer] {
 
 /**
  * Wrapper class to JavaFX's 
- * [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html `ObservableList`]].
+ * [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html $OL]].
  *
  * @tparam T Type of this $buf
  *
  * @define OB `ObservableBuffer`
+ * @define OL `ObservavbleList`
  * @define ownOB The $OB itself.
  * @define buf `Buffer`
- * @define WhyOverride Overrided method to make it behave like wrapped `ObservableList`.
+ * @define WhyOverride Overrided method to make it behave like wrapped $OL.
  * @define noCL The new $OB won't have Change and Invalidation Listeners from original $buf.
  *
  */
@@ -402,10 +403,10 @@ class ObservableBuffer[T](override val delegate: jfxc.ObservableList[T] = jfxc.F
    * Removes a number of elements from a given index position. $WhyOverride
    *
    * '''Note''': This method conflicts with method with same signature in
-   * [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html#remove(int,int) ObservableList]].
+   * [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html#remove(int,int) $OL]].
    * There the arguments indicate a range of index of elements to be removed. Here the arguments indicate the first
    * index of range and the quantity of elements to be removed. If you want a functionality equivalent to JavaFX
-   * ObservableList, use `removeRange`.
+   * $OL, use `removeRange`.
    *
    * @param n the index which refers to the first element to remove.
    * @param count  the number of elements to remove.
@@ -417,7 +418,7 @@ class ObservableBuffer[T](override val delegate: jfxc.ObservableList[T] = jfxc.F
   /**
    * Remove a range of elements. Use this method if you want a functionality such as
    * [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html#remove(int,int) the method]]
-   *  with same signature in `ObservableList`.
+   *  with same signature in $OL.
    *
    * @param from the start of the range to remove (inclusive)
    * @param to  the end of the range to remove (exclusive)
