@@ -46,7 +46,7 @@ object DimensionDelegate {
 
 /**
  * Trait that unifies JavaFX classes that contains properties indicating height and width,
- * represented by `heightProperty` and `widthProperty` and their respectives getter and setters.
+ * represented by `heightProperty` and `widthProperty` and their respective getter and setters.
  *
  * @tparam J Original JavaFX type that contains `height` and `width` properties.
  */

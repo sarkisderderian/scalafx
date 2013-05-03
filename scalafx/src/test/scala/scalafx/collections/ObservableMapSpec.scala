@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,8 +52,8 @@ class ObservableMapSpec[K, V]
    * generated map must be a ObservableMap.
    *
    * @param generatedMap Generated Map, that should be a ObservableMap.
-   * @param original Map Original ObservableMap.
-   * @param shouldBeTheSame If both mapos should be same instance.
+   * @param originalMap Map Original ObservableMap.
+   * @param shouldBeTheSame If both maps should be same instance.
    */
   private def compareInstances(generatedMap: Map[Int, String],
     originalMap: ObservableMap[Int, String], shouldBeTheSame: Boolean) {
@@ -70,8 +70,9 @@ class ObservableMapSpec[K, V]
   override def getJavaClassInstance = jfxc.FXCollections.observableHashMap[K, V]
 
   it should "generate new instances using Companion's apply" in {
-    def assertGeneratedMap(map: Map[Int, String]) =
-	  map.toSet should equal(Map((1, "one"), (2, "two")).toSet)
+    def assertGeneratedMap(map: Map[Int, String]) {
+      map.toSet should equal(Map((1, "one"), (2, "two")).toSet)
+    }
 
     assertGeneratedMap(ObservableMap(List((1, "one"), (2, "two"))))
     assertGeneratedMap(ObservableMap((1, "one"), (2, "two")))
@@ -125,7 +126,7 @@ class ObservableMapSpec[K, V]
       (sourceMap, change) => sourceMap should be(map)
     }
 
-    // Excecution
+    // Execution
     map(3) = "three"
   }
 
@@ -143,7 +144,7 @@ class ObservableMapSpec[K, V]
         }
     }
 
-    // Excecution
+    // Execution
     map(0) = 0.toString
     compareInstances((map += (1 -> 1.toString)), map, true)
     compareInstances((map += (2 -> 2.toString) += (3 -> 3.toString)), map, true)

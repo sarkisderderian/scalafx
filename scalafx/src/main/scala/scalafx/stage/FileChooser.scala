@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@ object FileChooser {
      * ExtensionFilter:(description: String, extensions: String*)scalafx.stage.FileChooser.ExtensionFilter and constructor 
      * ExtensionFilter:(description: String, extensions: Seq[String])scalafx.stage.FileChooser.ExtensionFilter 
      * at line XX have same type after erasure: (description: java.lang.String, extensions: Seq)scalafx.stage.FileChooser#ExtensionFilter".
-     * So I decided mantain just Seq constructor. 
+     * So I decided maintain just Seq constructor.
      */
     //        def this(description: String, extensions: String*) = this(new jfxs.FileChooser.ExtensionFilter(description, extensions: _*))
 

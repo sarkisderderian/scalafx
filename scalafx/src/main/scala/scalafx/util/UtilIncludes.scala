@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@ trait UtilIncludes {
   /**
    * Convert a Function1 to a Callback JavaFX.
    */
-  implicit def function12jfxCallback[P, R](f: Function1[P, R]) = new jfxu.Callback[P, R] {
+  implicit def function12jfxCallback[P, R](f: (P) => R) = new jfxu.Callback[P, R] {
     def call(param: P) = f(param)
   }
   /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -86,7 +86,7 @@ object TextAreaTest extends JFXApp {
 }
 
 class TextAreaControls(target: TextArea) extends PropertiesNodes[TextArea](target, "TextArea Properties") {
-  // TODO: ChoiceBoxes are not really working. In JavaFX 2.1, bind their respectives values with TextArea properties. 
+  // TODO: ChoiceBoxes are not really working. In JavaFX 2.1, bind their respective values with TextArea properties.
 
   val chbPrefColumnCount = new ChoiceBox[Int] {
     items = ObservableBuffer[Int](0, 5, 10, 15, 20, 25, 30)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,5 +47,13 @@ class SceneSpec
   override protected def getScalaClassInstance = new Scene(getJavaClassInstance)
 
   override protected def getJavaClassInstance = new jfxs.Scene(new jfxs.Group)
+
+  it should "have a Property class that exposes all the JavaFX builder properties" in {
+    compareBuilderPropertiesInProxy(classOf[jfxs.SceneBuilder[_]], classOf[SceneProperty])
+  }
+
+  it should "have a Property class that exposes all the JavaFX properties" in {
+    comparePropertiesInProxy(classOf[jfxs.Scene], classOf[SceneProperty])
+  }
 
 }

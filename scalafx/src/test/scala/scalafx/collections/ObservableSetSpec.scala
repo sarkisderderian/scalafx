@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,8 +52,8 @@ class ObservableSetSpec[T]
    * generated map must be a ObservableSet.
    *
    * @param generatedSet Generated Set, that should be a ObservableSet.
-   * @param original Set Original ObservableSet.
-   * @param shouldBeTheSame If both mapos should be same instance.
+   * @param originalSet Set Original ObservableSet.
+   * @param shouldBeTheSame If both maps should be same instance.
    */
   private def compareInstances(generatedSet: Set[Int],
     originalSet: ObservableSet[Int], shouldBeTheSame: Boolean) {

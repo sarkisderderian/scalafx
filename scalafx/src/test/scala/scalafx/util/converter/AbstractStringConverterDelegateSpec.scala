@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,7 +61,7 @@ abstract private[converter] class AbstractStringConverterDelegateSpec[J <: java.
 
     val converter = getConverterForExample
 
-    def runConversionsForExamples(s: S, string: String) = {
+    def runConversionsForExamples(s: S, string: String) {
       val sToString = converter.toString(s)
       sToString should equal(string)
 

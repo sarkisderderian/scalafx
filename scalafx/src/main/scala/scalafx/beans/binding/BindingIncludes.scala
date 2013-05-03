@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@ trait BindingIncludes extends Bindings {
 
   implicit def double2VariablePrecisionNumber(d: Double) = VariablePrecisionNumber(d)
 
-  // Simple closure syntax for observables to reduce boilerplace on the JavaFX addListener methods
+  // Simple closure syntax for observables to reduce boilerplate on the JavaFX addListener methods
 
   implicit def closure2InvalidationListener(il: jfxb.Observable => Unit) = new jfxb.InvalidationListener {
     def invalidated(observable: jfxb.Observable) {

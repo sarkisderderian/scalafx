@@ -1,4 +1,5 @@
-/* Copyright (c) 2012, ScalaFX Project
+/*
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -111,14 +112,16 @@ package object cell {
     /**
      * Types that contains the method `updateItem(item: Any, empty: Boolean): Unit`
      */
-    type Updated[T] = {
-      def updateItem(item: Any, empty: Boolean): Unit
+    type Updated = {
+      def updateItem(item: Any, empty: Boolean)
     }
 
     /**
      * Updates the item associated with this Cell.
      */
-    def updateItem(item: T, empty: Boolean) = delegate.asInstanceOf[Updated[T]].updateItem(item, empty)
+    def updateItem(item: T, empty: Boolean) {
+      delegate.asInstanceOf[Updated].updateItem(item, empty)
+    }
 
   }
 
@@ -136,14 +139,13 @@ package object cell {
    *
    * @tparam T The type of the elements contained within the inner element inside the Cell.
    */
-  trait ItemnableCell[C <: jfxsc.Cell[T] with Itemable[T], T]
+  trait ItemableCell[C <: jfxsc.Cell[T] with Itemable[T], T]
     extends SFXDelegate[C] {
 
     /**
      * Returns the items to be displayed in the ChoiceBox when it is showing.
      */
-    def items: ObservableBuffer[T] = delegate.getItems()
-
+    def items = delegate.getItems
   }
 
   /**

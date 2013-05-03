@@ -416,14 +416,18 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    *
    * @param The Mnemonic
    */
-  def addMnemonic(m: Mnemonic) = delegate.addMnemonic(m)
+  def addMnemonic(m: Mnemonic) {
+    delegate.addMnemonic(m)
+  }
 
   /**
    * Unregisters the specified mnemonic.
    *
    * @param The Mnemonic to be removed.
    */
-  def removeMnemonic(m: Mnemonic) = delegate.removeMnemonic(m)
+  def removeMnemonic(m: Mnemonic) {
+    delegate.removeMnemonic(m)
+  }
 
   /**
    * Gets the list of mnemonics for this `Scene`.
@@ -437,13 +441,13 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
 
   /**
    * Confirms a potential drag and drop gesture that is recognized over this `Scene`.
-   * 
+   *
    * @param  The supported `TransferMode`(s) of this `Node`
    * @return A `Dragboard` to place this `Scene`'s data on
    */
-  def startDragAndDrop(transferModes: TransferMode*): Dragboard = 
+  def startDragAndDrop(transferModes: TransferMode*): Dragboard =
     delegate.startDragAndDrop(transferModes.map(_.delegate): _*)
-  
+
   /**
    * Starts a full press-drag-release gesture with this scene as gesture source.
    */

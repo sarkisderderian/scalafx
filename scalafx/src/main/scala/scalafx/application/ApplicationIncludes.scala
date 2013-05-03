@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, ScalaFX Project
+ * Copyright (c) 2011-2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ import javafx.{application => jfxa}
 object ApplicationIncludes extends ApplicationIncludes
 
 trait ApplicationIncludes {
-  implicit def jfxParamaters2sfx(p: jfxa.Application.Parameters) = new JFXApp.Parameters {
+  implicit def jfxParameters2sfx(p: jfxa.Application.Parameters) = new JFXApp.Parameters {
     def raw = p.getRaw
     def named = p.getNamed
     def unnamed = p.getUnnamed
