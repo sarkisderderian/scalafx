@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,36 +24,21 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.layout
 
-import javafx.scene.{ control => jfxsc }
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import javafx.scene.{layout => jfxsl}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
-}
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
-
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
-
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+/** Background Spec tests. */
+@RunWith(classOf[JUnitRunner])
+class BackgroundSpec {
+  assert(false, "Test code is commented, it would not compile due to `BackgroundBuilder` missing in JavaFX 8")
+  // FIXME reimplement test without using `BackgroundBuilder`
+  //  extends AbstractSFXDelegateSpec[jfxsl.Background, Background, jfxsl.BackgroundBuilder](classOf[jfxsl.Background], classOf[Background], classOf[jfxsl.BackgroundBuilder]) {
+  //
+  //  override protected def getScalaClassInstance = new Background(getJavaClassInstance) {}
+  //
+  //  override protected def getJavaClassInstance = Background.EMPTY
 }

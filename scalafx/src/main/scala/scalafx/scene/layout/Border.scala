@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,36 +24,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.layout
 
-import javafx.scene.{ control => jfxsc }
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
+
+import javafx.scene.{ layout => jfxsl }
 import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
+object Border {
+  implicit def sfxBorder2jfx(v: Border) = v.delegate
+
+  /** An empty Border, useful to use instead of null. */
+  val EMPTY = jfxsl.Border.EMPTY
 }
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
-
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
-
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+class Border(override val delegate: jfxsl.Border)
+  extends SFXDelegate[jfxsl.Border] {
+  //FIXME implement constructors
+//  /** Creates a new Border by supplying an array of BorderImages. */
+//  def this(BorderImage... images)
+//
+//    /** Creates a new Border by supplying an array of BorderStrokes. */
+//    def this(BorderStroke... strokes)
+//
+//    /** Creates a new Border by supplying an array of BorderStrokes and BorderImages. */
+//    def this(BorderStroke[] strokes, BorderImage[] images)
+//
+//    /** Creates a new Border by supplying a List of BorderStrokes and BorderImages. */
+//    def this(java.util.List[BorderStroke] strokes, java.util.List<BorderImage> images)
 }

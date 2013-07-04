@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,36 +24,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.layout
 
-import javafx.scene.{ control => jfxsc }
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
+import javafx.scene.{ layout => jfxsl }
 import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
+object Background {
+  implicit def sfxBackground2jfx(v: Background) = v.delegate
+
+  /** An empty Background, useful to use instead of null. */
+  val EMPTY = jfxsl.Background.EMPTY
 }
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
-
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
-
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+class Background(override val delegate: jfxsl.Background)
+  extends SFXDelegate[jfxsl.Background] {
+  //FIXME implement constructors
 }
