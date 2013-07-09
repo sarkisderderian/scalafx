@@ -24,36 +24,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.graphics3d
 
-import javafx.scene.{ control => jfxsc }
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import scalafx.application.JFXApp
+import scalafx.application.JFXApp.PrimaryStage
+import scalafx.scene._
+import scalafx.scene.transform.{Translate, Rotate}
+import scalafx.scene.paint.{Color, PhongMaterial}
+import scalafx.scene.shape.{Box, DrawMode}
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
-}
+/** Demo of a triangular frame of a 3D box based on example in Ensemble 8. */
+object Simple3DBoxApp extends JFXApp {
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
-
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
+  stage = new PrimaryStage {
+    scene = new Scene {
+      content = createContent()
+      resizable = false
+    }
   }
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
+  def createContent(): Node = {
+    val testBox = new Box(5, 5, 5) {
+      material = new PhongMaterial(Color.RED)
+      drawMode = DrawMode.LINE
+    }
+
+    val perspectiveCamera = new PerspectiveCamera(true) {
+      transforms +=(
+        new Rotate(-20, Rotate.YAxis),
+        new Rotate(-20, Rotate.XAxis),
+        new Translate(0, 0, -15))
+    }
+
+    val root = new Group {
+      children ++= Seq(perspectiveCamera, testBox)
+    }
+
+    new SubScene(root, 300, 300) {
+      fill = Color.ALICEBLUE
+      camera = perspectiveCamera
+    }
   }
 }

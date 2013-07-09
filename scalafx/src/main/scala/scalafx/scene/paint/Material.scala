@@ -24,21 +24,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.web
+package scalafx.scene.paint
 
-import javafx.scene.{web => jfxsw}
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import javafx.scene.{paint => jfxsp}
+import scalafx.delegate.SFXDelegate
 
-/** PromptData Spec tests. */
-@RunWith(classOf[JUnitRunner])
-class PromptDataSpec {
-  assert(false, "Test code is commented, it would not compile due to `PromptDataBuilder` missing in JavaFX 8")
-  // FIXME reimplement test without using `PromptDataBuilder`
-  //  extends AbstractSFXDelegateSpec[jfxsw.PromptData, PromptData, jfxsw.PromptDataBuilder[_]](classOf[jfxsw.PromptData], classOf[PromptData], classOf[jfxsw.PromptDataBuilder[_]]) {
-  //
-  //  override protected def getScalaClassInstance = new PromptData("", "")
-  //
-  //  override protected def getJavaClassInstance = new jfxsw.PromptData("", "")
-  //
+object Material {
+  implicit def sfxMaterial2jfx(c: Material) = c.delegate
 }
+
+abstract class Material (override val delegate: jfxsp.Material) extends SFXDelegate[jfxsp.Material]

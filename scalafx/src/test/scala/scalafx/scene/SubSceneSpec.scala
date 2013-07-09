@@ -24,36 +24,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
 
-import javafx.scene.{ control => jfxsc }
+package scalafx.scene
+
+import javafx.{scene => jfxs}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
-}
+/**
+ * Shape Spec tests.
+ *
+ *
+ */
+@RunWith(classOf[JUnitRunner])
+class SubSceneSpec
+  extends SimpleSFXDelegateSpec[jfxs.SubScene, SubScene](classOf[jfxs.SubScene], classOf[SubScene])
+  with RunOnApplicationThread {
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
+  override protected def getScalaClassInstance = new SubScene(new Group(), 300, 300)
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
-
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+  override def getJavaClassInstance = new jfxs.SubScene(new Group(), 300, 300)
 }

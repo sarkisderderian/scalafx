@@ -24,36 +24,41 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.shape
 
-import javafx.scene.{ control => jfxsc }
+import javafx.scene.{paint => jfxsp}
+import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
+import scalafx.scene.Node
 import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import scalafx.scene.paint.Material
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
+object Shape3D {
+  implicit def sfxShape3D2jfx(v: Shape3D) = v.delegate
 }
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
+/** Wraps [[http://docs.oracle.com/javafx/8/api/javafx/scene/shape/Shape3D.html]]. */
+abstract class Shape3D(override val delegate: jfxss.Shape3D)
+  extends Node(delegate)
+  with SFXDelegate[jfxss.Shape3D] {
+
+  /** Defines the cullFace this Shape3D. */
+  def cullFace: ObjectProperty[jfxss.CullFace] = delegate.cullFaceProperty
+  def cullFace_=(v: CullFace) {
+    ObjectProperty.fillProperty[jfxss.CullFace](this.cullFace, v)
   }
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
+  /** Defines the drawMode this Shape3D. */
+  def drawMode: ObjectProperty[jfxss.DrawMode] = delegate.drawModeProperty
+  def drawMode_=(v: DrawMode) {
+    ObjectProperty.fillProperty[jfxss.DrawMode](this.drawMode, v)
+  }
+
+  /** Defines the material this Shape3D. */
+  def material: ObjectProperty[jfxsp.Material] = delegate.materialProperty
+  def material_=(v: Material) {
+    ObjectProperty.fillProperty[jfxsp.Material](this.material, v)
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2013, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,36 +24,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.layout
 
-import javafx.scene.{ control => jfxsc }
+import javafx.scene.{layout => jfxsl}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import scalafx.testutil.SimpleSFXDelegateSpec
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
-}
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
+/** Background Spec tests. */
+@RunWith(classOf[JUnitRunner])
+class BackgroundSpec   extends SimpleSFXDelegateSpec[jfxsl.Background, Background](classOf[jfxsl.Background], classOf[Background]) {
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
+    override protected def getScalaClassInstance = new Background(getJavaClassInstance) {}
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+    override protected def getJavaClassInstance = Background.EMPTY
 }

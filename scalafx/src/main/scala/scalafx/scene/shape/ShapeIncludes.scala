@@ -31,7 +31,7 @@ import javafx.scene.{ shape => jfxss }
 object ShapeIncludes extends ShapeIncludes
 
 /**
- * Contains implcit methods to convert from
+ * Contains implicit methods to convert from
  * [[http://docs.oracle.com/javafx/2/api/javafx/scene/shape/package-summary.html `javafx.scene.shape`]]
  * Classes/Traits to their $SFX counterparts.
  *
@@ -47,6 +47,8 @@ object ShapeIncludes extends ShapeIncludes
  * @define CLP ClosePath
  * @define CCR CubicCurve
  * @define CCT CubicCurveTo
+ * @define CUF CullFace
+ * @define DRM DrawMode
  * @define ELI Ellipse
  * @define FLR FillRule
  * @define HLT HLineTo
@@ -94,6 +96,14 @@ trait ShapeIncludes {
   implicit def jfxArcType2sfx(e: jfxss.ArcType) = ArcType.jfxEnum2sfx(e)
 
   /**
+   * $STARTBox.html Box$END
+   *
+   * @param b $JFX Box
+   * @return $SFX Box
+   */
+  implicit def jfxBox2sfx(b: jfxss.Box) = new Box(b) {}
+
+  /**
    * $START$CLC.html $CLC$END
    *
    * @param r $JFX $CLC
@@ -124,6 +134,22 @@ trait ShapeIncludes {
    * @return $SFX $CCT
    */
   implicit def jfxCubicCurveTo2sfx(c: jfxss.CubicCurveTo) = new CubicCurveTo(c)
+
+  /**
+   * $START$CUF.html $CUF$END
+   *
+   * @param cf $JFX $CUF
+   * @return $SFX $CUF
+   */
+  implicit def jfxCullFace2sfx(cf: jfxss.CullFace) = CullFace.jfxEnum2sfx(cf)
+
+  /**
+   * $START$DRM.html $DRM$END
+   *
+   * @param e $JFX $DRM
+   * @return $SFX $DRM
+   */
+  implicit def jfxDrawMode2sfx(e: jfxss.DrawMode) = DrawMode.jfxEnum2sfx(e)
 
   /**
    * $START$ELI.html $ELI$END
@@ -236,6 +262,14 @@ trait ShapeIncludes {
    * @return $SFX $SHA
    */
   implicit def jfxShape2sfx(s: jfxss.Shape) = new Shape(s) {}
+
+  /**
+   * $START$SHA.html $SH3DA$END
+   *
+   * @param s $JFX $SHA3D
+   * @return $SFX $SHA3D
+   */
+  implicit def jfxShape3D2sfx(s: jfxss.Shape3D) = new Shape3D(s) {}
 
   /**
    * $START$SLC.html $SLC$END

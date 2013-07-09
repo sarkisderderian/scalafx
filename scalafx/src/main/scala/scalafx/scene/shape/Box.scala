@@ -24,36 +24,42 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.shape
 
-import javafx.scene.{ control => jfxsc }
+import javafx.scene.{shape => jfxss}
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
+import scalafx.beans.property.DoubleProperty
 import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
+
+object Box {
+  implicit def sfxBox2jfx(v: Box) = v.delegate
 }
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
+/**
+ * Wraps [[http://docs.oracle.com/javafx/8/api/javafx/scene/shape/Box.html]].
+ */
+class Box(override val delegate: jfxss.Box = new jfxss.Box())
+  extends Shape3D(delegate)
+  with SFXDelegate[jfxss.Box] {
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
+  def this(width: Double, height: Double, depth: Double) = this(new jfxss.Box(width, height, depth))
+
+  /** Defines the depth or the Z dimension of the Box. */
+  def depth: DoubleProperty = delegate.depthProperty
+  def depth_=(v: Double) {
+    depth() = v
   }
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
+  /** Defines the height or the Y dimension of the Box. */
+  def height: DoubleProperty = delegate.heightProperty
+  def height_=(v: Double) {
+    height() = v
+  }
+
+  /** Defines the width or the Z dimension of the Box. */
+  def width: DoubleProperty = delegate.widthProperty
+  def width_=(v: Double) {
+    width() = v
   }
 }

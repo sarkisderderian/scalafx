@@ -24,36 +24,24 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.geometry
 
-import javafx.scene.{ control => jfxsc }
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import javafx.{geometry => jfxg}
+import scalafx.delegate.{ SFXEnumDelegateCompanion, SFXEnumDelegate }
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
+/** Wrapper for [[javafx.geometry.NodeOrientation]] */
+object NodeOrientation
+  extends SFXEnumDelegateCompanion[jfxg.NodeOrientation, NodeOrientation] {
+
+  val INHERIT = new NodeOrientation(jfxg.NodeOrientation.INHERIT)
+  val LEFT_TO_RIGHT = new NodeOrientation(jfxg.NodeOrientation.LEFT_TO_RIGHT)
+  val RIGHT_TO_LEFT = new NodeOrientation(jfxg.NodeOrientation.RIGHT_TO_LEFT)
+
+  protected override def unsortedValues: Array[NodeOrientation] = Array(INHERIT, LEFT_TO_RIGHT, RIGHT_TO_LEFT)
 }
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
+sealed case class NodeOrientation(override val delegate: jfxg.NodeOrientation)
+  extends SFXEnumDelegate[jfxg.NodeOrientation]
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
-}
+

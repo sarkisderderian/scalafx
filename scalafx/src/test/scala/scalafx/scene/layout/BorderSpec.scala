@@ -24,36 +24,20 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package scalafx.scene.control
+package scalafx.scene.layout
 
-import javafx.scene.{ control => jfxsc }
+import javafx.scene.{layout => jfxsl}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.delegate.SFXDelegate
-import scalafx.scene.layout.Region
+import scalafx.testutil.SimpleSFXDelegateSpec
 
-object Control {
-  implicit def sfxControl2jfx(v: Control) = v.delegate
-}
 
-abstract class Control(override val delegate: jfxsc.Control)
-  extends Region(delegate)
-  with Skinnable
-  with SFXDelegate[jfxsc.Control] {
+/** Border Spec tests. */
+@RunWith(classOf[JUnitRunner])
+class BorderSpec extends SimpleSFXDelegateSpec[jfxsl.Border, Border](classOf[jfxsl.Border], classOf[Border]) {
 
-  /**
-   * The ContextMenu to show for this control.
-   */
-  def contextMenu: ObjectProperty[jfxsc.ContextMenu] = delegate.contextMenuProperty
-  def contextMenu_=(v: ContextMenu) {
-    contextMenu() = v
-  }
+    override protected def getScalaClassInstance = new Border(getJavaClassInstance) {}
 
-  /**
-   * The ToolTip for this control.
-   */
-  def tooltip: ObjectProperty[jfxsc.Tooltip] = delegate.tooltipProperty
-  def tooltip_=(v: Tooltip) {
-    tooltip() = v
-  }
+    override protected def getJavaClassInstance = Border.EMPTY
 }
