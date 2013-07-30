@@ -43,7 +43,6 @@ import scalafx.geometry.{HPos, Pos, VPos}
 import scalafx.scene.Scene
 import scalafx.scene.control.CheckBox
 import scalafx.scene.control.ComboBox
-import scalafx.scene.control.Control
 import scalafx.scene.control.Label
 import scalafx.scene.control.TextField
 import scalafx.scene.effect.Reflection
@@ -224,7 +223,7 @@ object ColorSelector extends JFXApp {
 
   val rectangleRowsConstraint = new RowConstraints {
     vgrow = Priority.ALWAYS
-    prefHeight = Control.USE_COMPUTED_SIZE
+    prefHeight = Region.USE_COMPUTED_SIZE
   }
   val otherRowsConstraint = new RowConstraints {
     vgrow = Priority.NEVER
