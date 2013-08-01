@@ -26,19 +26,15 @@
  */
 package scalafx.scene.web
 
-import javafx.scene.{ web => jfxsw }
-import scalafx.Includes._
+import javafx.scene.{web => jfxsw}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import scalafx.testutil.AbstractSFXDelegateSpec
-import scalafx.testutil.RunOnApplicationThread
+import scalafx.Includes._
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
-/**
- * HTMLEditor Spec tests.
- *
- *
- */
+/** HTMLEditor Spec tests. */
 @RunWith(classOf[JUnitRunner])
-class HTMLEditorSpec
-  extends AbstractSFXDelegateSpec[jfxsw.HTMLEditor, HTMLEditor, jfxsw.HTMLEditorBuilder[_]](classOf[jfxsw.HTMLEditor], classOf[HTMLEditor], classOf[jfxsw.HTMLEditorBuilder[_]])
-  with RunOnApplicationThread
+class HTMLEditorSpec extends SimpleSFXDelegateSpec[jfxsw.HTMLEditor, HTMLEditor](classOf[jfxsw.HTMLEditor], classOf[HTMLEditor])
+    with RunOnApplicationThread   {
+
+}
