@@ -70,6 +70,12 @@ class MouseEvent(override val delegate: jfxsi.MouseEvent) extends InputEvent(del
    */
   def clickCount: Int = delegate.getClickCount
 
+  /** Gets the event type of this event. */
+  override def eventType : EventType[_ <: jfxsi.MouseEvent] = delegate.getEventType()
+
+  /** Returns information about the pick. */
+  def pickResult : PickResult = delegate.getPickResult
+
   def sceneX: Double = delegate.getSceneX
 
   def sceneY: Double = delegate.getSceneY
@@ -81,6 +87,9 @@ class MouseEvent(override val delegate: jfxsi.MouseEvent) extends InputEvent(del
   def x: Double = delegate.getX
 
   def y: Double = delegate.getY
+
+  /** Depth position of the event relative to the origin of the MouseEvent's source. */
+  def z = delegate.getZ
 
   /**
    * Whether or not the Alt modifier is down on this event.
@@ -114,6 +123,9 @@ class MouseEvent(override val delegate: jfxsi.MouseEvent) extends InputEvent(del
    */
   def middleButtonDown: Boolean = delegate.isMiddleButtonDown
 
+  /** Returns true if this mouse event is the popup menu trigger event for the platform. */
+  def popupTrigger:Boolean = delegate.isPopupTrigger
+
   /**
    * Returns true if primary button (button 1, usually the left) is currently pressed.
    */
@@ -139,4 +151,6 @@ class MouseEvent(override val delegate: jfxsi.MouseEvent) extends InputEvent(del
    */
   def stillSincePress: Boolean = delegate.isStillSincePress
 
+  /** Indicates whether this event is synthesized from using a touch screen instead of usual mouse event source devices like mouse or track pad. */
+  def synthesized: Boolean = delegate.isSynthesized
 }
