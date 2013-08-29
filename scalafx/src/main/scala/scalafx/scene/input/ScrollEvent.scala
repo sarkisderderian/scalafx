@@ -90,7 +90,7 @@ object ScrollEvent {
    * Common supertype for all scroll event types.
    */
   val ANY : EventType[jfxsi.ScrollEvent] = jfxsi.ScrollEvent.ANY
-    : EventType[jfxsi.ScrollEvent]
+
   /**
    * This event occurs when user performs a scrolling action such as rotating mouse wheel or dragging a finger over
    * touch screen.
