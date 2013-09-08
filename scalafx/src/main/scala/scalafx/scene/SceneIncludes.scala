@@ -26,7 +26,6 @@
  */
 package scalafx.scene
 
-import javafx.beans.{ property => jfxbp }
 import scalafx.beans.property.ReadOnlyObjectProperty
 import javafx.{ scene => jfxs }
 import chart.ChartIncludes
@@ -41,7 +40,7 @@ import effect.EffectIncludes
 object SceneIncludes extends SceneIncludes
 
 /**
- * Contains implcit methods to convert from
+ * Contains implicit methods to convert from
  * [[http://docs.oracle.com/javafx/2/api/javafx/scene/package-summary.html `javafx.scene`]] and subpackages
  * Classes/Traits to their ScalaFX counterparts.
  */
@@ -56,7 +55,7 @@ trait SceneIncludes extends ChartIncludes
   with ControlIncludes
 
 /**
- * Contains implcit methods to convert from
+ * Contains implicit methods to convert from
  * [[http://docs.oracle.com/javafx/2/api/javafx/scene/package-summary.html `javafx.scene`]]
  * Classes/Traits to their $SFX counterparts.
  *
@@ -78,8 +77,11 @@ trait SceneIncludes extends ChartIncludes
  * @define SCE Scene
  * @define SCP SceneProperty
  * @define SNP SnapshotParameters
+ * @define SSCE SubScene
  */
 trait LowerPriorityIncludes {
+
+  implicit def jfxAmbientLight2sfx(v: jfxs.AmbientLight) = new AmbientLight(v)
 
   /**
    * $START$CHI.html $CHI$END
@@ -129,6 +131,8 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
 
+  implicit def jfxLightBase2sfx(v: jfxs.LightBase) = new LightBase(v) {}
+
   /**
    * $START$NOD.html $NOD$END
    *
@@ -161,6 +165,8 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
 
+  implicit def jfxPointLight2sfx(v: jfxs.PointLight) = new PointLight(v)
+
   /**
    * $START$SCE.html $SCE$END
    *
@@ -185,4 +191,11 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxSnapshotParameters2sfx(sp: jfxs.SnapshotParameters) = new SnapshotParameters(sp)
 
+  /**
+   * $START$SSCE.html $SSCE$END
+   *
+   * @param v $JFX $SSCE
+   * @return $SFX $SSCE
+   */
+  implicit def jfxSubScene2sfx(v: jfxs.SubScene) = new SubScene(v)
 }

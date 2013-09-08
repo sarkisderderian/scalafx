@@ -28,8 +28,7 @@ package scalafx.scene.transform
 
 import org.junit.runner.RunWith
 import javafx.scene.{ transform => jfxst }
-import scalafx.Includes.jfxTransform2sfx
-import scalafx.scene.transform.Transform.sfxTransform2jfx
+import scalafx.Includes._
 import scalafx.testutil.SimpleSFXDelegateSpec
 import org.scalatest.junit.JUnitRunner
 
@@ -49,7 +48,8 @@ class TransformSpec
     //Probably ot will be removed in future versions.
     override def impl_apply(affine: com.sun.javafx.geom.transform.Affine3D) {}
 
-    override def impl_copy(): jfxst.Transform = { getJavaClassInstance.impl_copy() }
+    // NOTE JFX8: comment out impl_copy to avoid compilation error
+//    override def impl_copy(): jfxst.Transform = { getJavaClassInstance.impl_copy() }
   }
 
 }
