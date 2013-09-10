@@ -26,11 +26,8 @@
  */
 package scalafx.scene
 
-import collection.JavaConversions._
-import javafx.{ event => jfxe, scene => jfxs }
-import jfxs.{ input => jfxsi, paint => jfxsp, layout => jfxsl }
-import javafx.{ collections => jfxc }
-import javafx.{ util => jfxu }
+import javafx.{event => jfxe, scene => jfxs, collections => jfxc, util => jfxu, geometry => jfxg}
+import jfxs.{input => jfxsi, paint => jfxsp, layout => jfxsl}
 import scalafx.collections._
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
@@ -38,6 +35,7 @@ import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.beans.property.ReadOnlyObjectProperty
 import scalafx.scene.paint.Paint
 import scalafx.delegate.SFXDelegate
+import scalafx.geometry.NodeOrientation
 import scalafx.scene.input.Mnemonic
 import scalafx.scene.image.WritableImage
 import scalafx.scene.input.TransferMode
@@ -52,7 +50,7 @@ object Scene {
  *
  * @constructor Create a new ScalaFX Scene with JavaFX Scene as delegate.
  * @param delegate JavaFX Scene delegated. Its default value is a JavaFX Scene with a
- * [[http://docs.oracle.com/javafx/2/api/javafx/scene/Group.html Group]] as root Node.
+ *                 [[http://docs.oracle.com/javafx/2/api/javafx/scene/Group.html Group]] as root Node.
  */
 class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group()))
   extends SFXDelegate[jfxs.Scene] {
@@ -89,10 +87,17 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    * @param width The width of the scene
    * @param height The height of the scene
    */
-  def this(parent: Parent, width: Double, height: Double, depthBuffer: Boolean) = this(new jfxs.Scene(parent, width, height, depthBuffer))
-  //def this(stackPane: jfxsl.StackPane) = this (new jfxs.Scene(stackPane))
+  def this(parent: Parent, width: Double, height: Double, depthBuffer: Boolean) =
+    this(new jfxs.Scene(parent, width, height, depthBuffer))
 
-  //def this(stackPane: jfxsl.StackPane, width: Double, height: Double) = this (new jfxs.Scene(stackPane, width, height))
+  /**
+   * Creates a Scene with a `Group` as parent.
+   *
+   * @param width The width of the scene
+   * @param height The height of the scene
+   */
+  def this(width: Double, height: Double, depthBuffer: Boolean) =
+    this(new jfxs.Scene(new jfxs.Group(), width, height, depthBuffer))
 
   /**
    * Returns the root Node of the scene graph
@@ -111,8 +116,9 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    */
   def getChildren = root.value match {
     case group: jfxs.Group => group.getChildren
-    case pane: jfxsl.Pane  => pane.getChildren
-    case _                 => throw new IllegalStateException("Cannot access children of root: " + root + "\nUse a class that extends Group or Pane, or override the getChildren method.")
+    case pane: jfxsl.Pane => pane.getChildren
+    case _ => throw new IllegalStateException("Cannot access children of root: " + root +
+      "\nUse a class that extends Group or Pane, or override the getChildren method.")
   }
 
   /**
@@ -155,6 +161,9 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
     cursor() = v
   }
 
+  /** The effective node orientation of a scene resolves the inheritance of node orientation, returning either left-to-right or right-to-left.  */
+  def effectiveNodeOrientation: ReadOnlyObjectProperty[jfxg.NodeOrientation] = delegate.effectiveNodeOrientationProperty
+
   /**
    * Specifies the event dispatcher for this scene.
    */
@@ -180,6 +189,11 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    * The width of this Scene
    */
   def width: ReadOnlyDoubleProperty = delegate.widthProperty
+
+  def nodeOrientation: ObjectProperty[jfxg.NodeOrientation] = delegate.nodeOrientationProperty
+  def nodeOrientation_=(v: NodeOrientation) {
+    ObjectProperty.fillProperty[jfxg.NodeOrientation](this.nodeOrientation, v)
+  }
 
   /**
    * Defines a function to be called when a mouse button has been clicked (pressed and released) on this `Scene`.
@@ -406,7 +420,7 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    *
    * @param selector The css selector to look up
    * @return A [[scala.Some]] containing the Node in the scene which matches the CSS selector, or [[scala.None]]
-   * if none is found.
+   *         if none is found.
    */
   def lookup(selector: String): Option[Node] = Option(delegate.lookup(selector))
 
