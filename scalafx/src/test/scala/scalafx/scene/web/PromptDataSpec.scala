@@ -26,23 +26,18 @@
  */
 package scalafx.scene.web
 
-import javafx.scene.{ web => jfxsw }
-import scalafx.Includes._
+import javafx.scene.{web => jfxsw}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.Includes._
+import scalafx.testutil.SimpleSFXDelegateSpec
 
-/**
- * PromptData Spec tests.
- *
- *
- */
+/** PromptData Spec tests. */
 @RunWith(classOf[JUnitRunner])
-class PromptDataSpec
-  extends AbstractSFXDelegateSpec[jfxsw.PromptData, PromptData, jfxsw.PromptDataBuilder[_]](classOf[jfxsw.PromptData], classOf[PromptData], classOf[jfxsw.PromptDataBuilder[_]]) {
+class PromptDataSpec extends SimpleSFXDelegateSpec[jfxsw.PromptData, PromptData](classOf[jfxsw.PromptData], classOf[PromptData]) {
 
-  override protected def getScalaClassInstance = new PromptData("", "")
+    override protected def getScalaClassInstance = new PromptData("", "")
 
-  override protected def getJavaClassInstance = new jfxsw.PromptData("", "")
+    override protected def getJavaClassInstance = new jfxsw.PromptData("", "")
 
 }

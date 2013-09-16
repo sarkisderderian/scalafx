@@ -27,6 +27,8 @@
 package scalafx.scene.chart
 
 import javafx.scene.{chart => jfxsc}
+import scalafx.Includes._
+import scalafx.beans.property.BooleanProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.delegate.SFXDelegate
 
@@ -50,5 +52,11 @@ class AreaChart[X, Y](override val delegate: jfxsc.AreaChart[X, Y])
 
   def this(xAxis: Axis[X], yAxis: Axis[Y], data: ObservableBuffer[jfxsc.XYChart.Series[X, Y]]) {
     this(new jfxsc.AreaChart[X, Y](xAxis, yAxis, data))
+  }
+
+  /** When true, CSS styleable symbols are created for any data items that don't have a symbol node specified. */
+  def createSymbols: BooleanProperty = delegate.createSymbolsProperty
+  def createSymbols_=(v: Boolean) {
+    createSymbols() = v
   }
 }

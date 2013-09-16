@@ -31,15 +31,14 @@ import org.scalatest.junit.JUnitRunner
 
 import javafx.scene.{ control => jfxsc }
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.SimpleSFXDelegateSpec
 
 /**
  * TablePositionSpec tests.
  */
 @RunWith(classOf[JUnitRunner])
-class TablePositionSpec[S, T]
-  extends AbstractSFXDelegateSpec[jfxsc.TablePosition[S, T], TablePosition[S, T], jfxsc.TablePositionBuilder[S, T, _]](classOf[jfxsc.TablePosition[S, T]], classOf[TablePosition[S, T]], classOf[jfxsc.TablePositionBuilder[S, T, _]]) {
+class TablePositionSpec[S, T] extends SimpleSFXDelegateSpec[jfxsc.TablePosition[S, T], TablePosition[S, T]](classOf[jfxsc.TablePosition[S, T]], classOf[TablePosition[S, T]]) {
 
   override def getJavaClassInstance = new jfxsc.TablePosition(null, 0, null)
-  
+
 }
