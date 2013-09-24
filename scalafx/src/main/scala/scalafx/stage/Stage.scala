@@ -27,14 +27,13 @@
 package scalafx.stage
 
 import javafx.{stage => jfxs}
+import javafx.scene.{input => jfxsi}
 import scalafx.Includes._
-import scalafx.beans.property.BooleanProperty
-import scalafx.beans.property.ReadOnlyBooleanProperty
-import scalafx.beans.property.StringProperty
+import scalafx.beans.property.{ObjectProperty, BooleanProperty, ReadOnlyBooleanProperty, StringProperty}
 import scalafx.scene.Scene
 import scalafx.stage.Window.sfxWindow2jfx
 import scalafx.delegate.SFXDelegate
-import scalafx.application.JFXApp
+import scalafx.scene.input.KeyCombination
 
 object Stage {
   implicit def sfxStage2jfx(v: Stage) = v.delegate
@@ -58,6 +57,19 @@ class Stage(override val delegate: jfxs.Stage = new jfxs.Stage)
    */
   def this(style: jfxs.StageStyle) = this(new jfxs.Stage(style))
 
+  def	fullScreenExitHint: ObjectProperty[String] = delegate.fullScreenExitHintProperty
+  def	fullScreenExitHint_=(value: String) {
+    fullScreenExitHint() = value
+  }
+
+  /**
+   * Specifies the Full Screen exit key combination
+   */
+  def	fullScreenExitKey: ObjectProperty[jfxsi.KeyCombination] = delegate.fullScreenExitKeyProperty
+  def	fullScreenExitHint_=(value: KeyCombination) {
+    fullScreenExitKey() = value
+  }
+
   /**
    * Specifies whether this Stage should be a full-screen, undecorated window.
    */
@@ -65,6 +77,9 @@ class Stage(override val delegate: jfxs.Stage = new jfxs.Stage)
   def fullScreen_=(value: Boolean) {
     delegate.setFullScreen(value)
   }
+
+  /** Defines whether the Stage is maximized or not. */
+  def maximized: ReadOnlyBooleanProperty = delegate.maximizedProperty
 
   /**
    * Defines the title of the Stage.
