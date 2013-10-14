@@ -36,17 +36,18 @@ object ScalaFXBuild extends Build {
   import Dependencies._
   import Resolvers._
 
-  val scalafxVersion = "1.0.0-M6-SNAPSHOT"
+  val scalafxVersion = "8.0.0-M2-SNAPSHOT"
 
   lazy val scalafxSettings = Defaults.defaultSettings ++ Seq(
     organization := "org.scalafx",
     version := scalafxVersion,
-    crossScalaVersions := Seq("2.9.3", "2.10.3"),
+    // TODO SFX8: At a moment only ScalaFX 2.10.2+ supports Java 8, due to some InvokeDynamic byte codes
+    crossScalaVersions := Seq(/* "2.9.3", */ "2.10.3"),
     scalaVersion <<= crossScalaVersions {versions => versions.head},
     scalacOptions ++= Seq("-unchecked", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
     scalacOptions in(Compile, doc) ++= Opts.doc.title("ScalaFX API"),
     scalacOptions in(Compile, doc) ++= Opts.doc.version(scalafxVersion),
-    javacOptions ++= Seq("-target", "1.6", "-source", "1.6", "-Xlint:deprecation"),
+    javacOptions ++= Seq("-target", "1.8", "-source", "1.8", "-Xlint:deprecation"),
     manifestSetting,
     publishSetting,
     resolvers ++= Seq(localMavenRepo, sonatypeNexusSnapshots),
