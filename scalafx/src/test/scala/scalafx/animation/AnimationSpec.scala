@@ -30,7 +30,7 @@ import javafx.{ animation => jfxa }
 import scalafx.Includes._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, AbstractSFXDelegateSpec}
 
 /**
  * Animation Spec tests.
@@ -39,13 +39,15 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class AnimationSpec
-  extends AbstractSFXDelegateSpec[jfxa.Animation, Animation, jfxa.AnimationBuilder[_]](classOf[jfxa.Animation], classOf[Animation], classOf[jfxa.AnimationBuilder[_]]) {
+  extends AbstractSFXDelegateSpec[jfxa.Animation, Animation, jfxa.AnimationBuilder[_]](
+    classOf[jfxa.Animation], classOf[Animation], classOf[jfxa.AnimationBuilder[_]])
+  with RunOnApplicationThread {
 
   override protected def getScalaClassInstance = new Animation(new jfxa.Timeline) {}
 
   override def getJavaClassInstance = new jfxa.Animation {
     def impl_playTo(p1: Long, p2: Long) {}
-    def impl_jumpTo(p1: Long, p2: Long) {}
+    def impl_jumpTo(p1: Long, p2: Long, p3: Boolean) {}
   }
 
 }
