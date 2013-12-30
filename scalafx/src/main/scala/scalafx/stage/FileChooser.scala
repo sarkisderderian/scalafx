@@ -33,6 +33,7 @@ import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.beans.property.StringProperty
 import scalafx.delegate.SFXDelegate
+import scalafx.stage.FileChooser.ExtensionFilter
 
 
 object FileChooser {
@@ -83,12 +84,17 @@ class FileChooser(override val delegate: jfxs.FileChooser = new jfxs.FileChooser
     ObjectProperty.fillProperty[File](initialDirectory, v)
   }
 
-  /**
-   * The initial file name for the displayed dialog.
-   */
+  /** The initial file name for the displayed dialog. */
   def initialFileName: ObjectProperty[String] = delegate.initialFileNameProperty
   def initialFileName_=(v: String) {
     ObjectProperty.fillProperty[String](initialFileName, v)
+  }
+
+  /** This property is used to pre-select the extension filter for the next displayed dialog
+    * and to read the user-selected extension filter from the dismissed dialog. */
+  def selectedExtensionFilter: ObjectProperty[jfxs.FileChooser.ExtensionFilter] = delegate.selectedExtensionFilterProperty
+  def selectedExtensionFilter_=(v: ExtensionFilter) {
+    ObjectProperty.fillProperty[jfxs.FileChooser.ExtensionFilter](selectedExtensionFilter, v)
   }
 
   /**
