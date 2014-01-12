@@ -29,7 +29,6 @@ package scalafx.scene.media
 import javafx.scene.{ media => jfxsm }
 import scalafx.Includes._
 import scalafx.delegate.SFXDelegate
-import scalafx.util.Duration
 import scalafx.event._
 
 object MediaErrorEvent {
