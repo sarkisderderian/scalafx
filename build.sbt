@@ -1,7 +1,7 @@
 import scala.xml._
 import java.net.URL
 
-val scalafxVersion = "1.0.0-M8-SNAPSHOT"
+val scalafxVersion = "8.0.0-M4-SNAPSHOT"
 
 // ScalaFX project
 lazy val scalafx = Project(
@@ -44,19 +44,19 @@ lazy val localMavenRepo = "Local Maven Repository" at "file://" + Path.userHome.
 lazy val scalafxSettings = Defaults.defaultSettings ++ Seq(
   organization := "org.scalafx",
   version := scalafxVersion,
-  crossScalaVersions := Seq("2.10.3", "2.9.3"),
+  // TODO SFX8: At a moment only ScalaFX 2.10.2+ supports Java 8, due to some InvokeDynamic byte codes
+  crossScalaVersions := Seq("2.10.3"/*, "2.9.3"*/),
   scalaVersion <<= crossScalaVersions { versions => versions.head },
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
   scalacOptions in(Compile, doc) ++= Opts.doc.title("ScalaFX API"),
   scalacOptions in(Compile, doc) ++= Opts.doc.version(scalafxVersion),
-  javacOptions ++= Seq(
-    "-target", "1.6",
-    "-source", "1.6",
+    javacOptions ++= Seq(
+    "-target", "1.8",
+    "-source", "1.8",
     "-Xlint:deprecation"),
   libraryDependencies ++= Seq(
     scalatest % "test",
     junit % "test"),
-  unmanagedLibs,
   manifestSetting,
   publishSetting,
   fork in Test := true,
@@ -68,26 +68,6 @@ lazy val scalafxSettings = Defaults.defaultSettings ++ Seq(
   },
   shellPrompt in ThisBuild := { state => "sbt:" + Project.extract(state).currentRef.project + "> " }
 ) ++ mavenCentralSettings
-
-// Location of JavaFX jar
-lazy val javaHome: File = {
-  val envPath = Option(System.getenv("JAVAFX_HOME")) match {
-    case Some(s) => s
-    case None => Option(System.getenv("JAVA_HOME")) match {
-      case Some(s) => s
-      case None => throw new RuntimeException("SBT Failure: neither JAVAFX_HOME nor " +
-        "JAVA_HOME environment variables have been defined!")
-    }
-  }
-  val dir = new File(envPath)
-  if (!dir.exists) {
-    throw new RuntimeException("SBT Failure: no such directory found: " + envPath)
-  }
-  println("**** detected Java/JDK Home is set to " + dir + "  ****")
-  dir
-}
-
-lazy val unmanagedLibs = unmanagedJars in Compile += Attributed.blank(javaHome / "jre/lib/jfxrt.jar")
 
 lazy val manifestSetting = packageOptions <+= (name, version, organization) map {
   (title, version, vendor) =>

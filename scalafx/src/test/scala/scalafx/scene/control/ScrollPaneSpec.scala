@@ -28,7 +28,7 @@ package scalafx.scene.control
 
 import javafx.scene.{ control => jfxsc }
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -38,4 +38,5 @@ import org.scalatest.junit.JUnitRunner
  */
 @RunWith(classOf[JUnitRunner])
 class ScrollPaneSpec
-  extends AbstractSFXDelegateSpec[jfxsc.ScrollPane, ScrollPane, jfxsc.ScrollPaneBuilder[_]](classOf[jfxsc.ScrollPane], classOf[ScrollPane], classOf[jfxsc.ScrollPaneBuilder[_]])
+  extends SimpleSFXDelegateSpec[jfxsc.ScrollPane, ScrollPane](classOf[jfxsc.ScrollPane], classOf[ScrollPane])
+  with RunOnApplicationThread
