@@ -30,7 +30,7 @@ import javafx.scene.{ control => jfxsc }
 import scalafx.Includes._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * Button Spec tests.
@@ -39,4 +39,5 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class ButtonSpec
-  extends AbstractSFXDelegateSpec[jfxsc.Button, Button, jfxsc.ButtonBuilder[_]](classOf[jfxsc.Button], classOf[Button], classOf[jfxsc.ButtonBuilder[_]])
+  extends SimpleSFXDelegateSpec[jfxsc.Button, Button](classOf[jfxsc.Button], classOf[Button])
+  with RunOnApplicationThread

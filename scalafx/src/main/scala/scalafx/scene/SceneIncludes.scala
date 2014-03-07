@@ -26,9 +26,8 @@
  */
 package scalafx.scene
 
-import javafx.beans.{ property => jfxbp }
 import scalafx.beans.property.ReadOnlyObjectProperty
-import javafx.{ scene => jfxs }
+import javafx.{scene => jfxs}
 import chart.ChartIncludes
 import layout.LayoutIncludes
 import image.ImageIncludes
@@ -41,22 +40,22 @@ import effect.EffectIncludes
 object SceneIncludes extends SceneIncludes
 
 /**
- * Contains implcit methods to convert from
+ * Contains implicit methods to convert from
  * [[http://docs.oracle.com/javafx/2/api/javafx/scene/package-summary.html `javafx.scene`]] and subpackages
  * Classes/Traits to their ScalaFX counterparts.
  */
 trait SceneIncludes extends ChartIncludes
-  with LayoutIncludes
-  with PaintIncludes
-  with ShapeIncludes
-  with TextIncludes
-  with ImageIncludes
-  with EffectIncludes
-  with LowerPriorityIncludes
-  with ControlIncludes
+with LayoutIncludes
+with PaintIncludes
+with ShapeIncludes
+with TextIncludes
+with ImageIncludes
+with EffectIncludes
+with LowerPriorityIncludes
+with ControlIncludes
 
 /**
- * Contains implcit methods to convert from
+ * Contains implicit methods to convert from
  * [[http://docs.oracle.com/javafx/2/api/javafx/scene/package-summary.html `javafx.scene`]]
  * Classes/Traits to their $SFX counterparts.
  *
@@ -76,10 +75,14 @@ trait SceneIncludes extends ChartIncludes
  * @define PAR Parent
  * @define PEC PerspectiveCamera
  * @define SCE Scene
+ * @define SCA SceneAntialiasing
  * @define SCP SceneProperty
  * @define SNP SnapshotParameters
+ * @define SSCE SubScene
  */
 trait LowerPriorityIncludes {
+
+  implicit def jfxAmbientLight2sfx(v: jfxs.AmbientLight) = new AmbientLight(v)
 
   /**
    * $START$CHI.html $CHI$END
@@ -129,6 +132,8 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxImageCursor2sfx(ic: jfxs.ImageCursor) = new ImageCursor(ic)
 
+  implicit def jfxLightBase2sfx(v: jfxs.LightBase) = new LightBase(v) {}
+
   /**
    * $START$NOD.html $NOD$END
    *
@@ -161,6 +166,8 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxPerspectiveCamera2sfx(v: jfxs.PerspectiveCamera) = new PerspectiveCamera(v)
 
+  implicit def jfxPointLight2sfx(v: jfxs.PointLight) = new PointLight(v)
+
   /**
    * $START$SCE.html $SCE$END
    *
@@ -168,6 +175,20 @@ trait LowerPriorityIncludes {
    * @return $SFX $SCE
    */
   implicit def jfxScene2sfx(v: jfxs.Scene) = new Scene(v)
+
+  /**
+   * $START$SCA.html $SCA$END
+   *
+   * @param v $JFX $SCA
+   * @return $SFX $SCA
+   *
+   * @throws java.lang.IllegalArgumentException if `v` has no known correspondence in ScalaFX.
+   */
+  implicit def jfxSceneAntialiasing2sfx(v: jfxs.SceneAntialiasing): SceneAntialiasing = {
+    // A value of null is treated as though antialiasing is disabled.
+    if (v eq null) SceneAntialiasing.Disabled
+    else new SceneAntialiasing(v)
+  }
 
   /**
    * Generates a $SCP from a $JFX $SCE.
@@ -185,4 +206,11 @@ trait LowerPriorityIncludes {
    */
   implicit def jfxSnapshotParameters2sfx(sp: jfxs.SnapshotParameters) = new SnapshotParameters(sp)
 
+  /**
+   * $START$SSCE.html $SSCE$END
+   *
+   * @param v $JFX $SSCE
+   * @return $SFX $SSCE
+   */
+  implicit def jfxSubScene2sfx(v: jfxs.SubScene) = new SubScene(v)
 }

@@ -30,8 +30,7 @@ import javafx.scene.{ control => jfxsc }
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import scalafx.Includes._
-import scalafx.scene.control.TextField.sfxTextField2jfx
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * TextInputControl Spec tests.
@@ -40,7 +39,9 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class TextInputControlSpec
-  extends AbstractSFXDelegateSpec[jfxsc.TextInputControl, TextInputControl, jfxsc.TextInputControlBuilder[_]](classOf[jfxsc.TextInputControl], classOf[TextInputControl], classOf[jfxsc.TextInputControlBuilder[_]]) {
+  extends SimpleSFXDelegateSpec[jfxsc.TextInputControl, TextInputControl](
+    classOf[jfxsc.TextInputControl], classOf[TextInputControl])
+  with RunOnApplicationThread {
 
   override protected def getScalaClassInstance = new TextField
 

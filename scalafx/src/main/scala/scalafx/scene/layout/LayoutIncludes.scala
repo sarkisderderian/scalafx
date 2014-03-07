@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2011-2014, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,6 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package scalafx.scene.layout
 
 import javafx.scene.{ layout => jfxsl }
@@ -41,6 +42,8 @@ object LayoutIncludes extends LayoutIncludes
  * @define END ]]` instance to its $SFX counterpart.
  *
  * @define ACPN AnchorPane
+ * @define BKGN Background
+ * @define BRDR Border
  * @define BDPN BorderPane
  * @define CLCT ColumnConstraints
  * @define CTBS ConstraintsBase
@@ -66,12 +69,48 @@ trait LayoutIncludes {
   implicit def jfxAnchorPane2sfx(a: jfxsl.AnchorPane) = new AnchorPane(a)
 
   /**
+     * $START$BKGN.html $BKGN$END
+     *
+     * @param v $JFX $BKGN
+     * @return $SFX $BKGN
+     */
+  implicit def jfxBackground2sfx(v: jfxsl.Background) = new Background(v)
+
+  implicit def jfxBackgroundFill2sfx(v: jfxsl.BackgroundFill) = new BackgroundFill(v)
+
+  implicit def jfxBackgroundImage2sfx(v: jfxsl.BackgroundImage) = new BackgroundImage(v)
+
+  implicit def jfxBackgroundPosition2sfx(v: jfxsl.BackgroundPosition) = new BackgroundPosition(v)
+
+  implicit def jfxBackgroundRepeat2sfx(v: jfxsl.BackgroundRepeat) = new BackgroundRepeat(v)
+
+  implicit def jfxBackgroundSize2sfx(v: jfxsl.BackgroundSize) = new BackgroundSize(v)
+
+  /**
+   * $START$BRDR.html $BRDR$END
+   *
+   * @param v $JFX $BRDR
+   * @return $SFX $BRDR
+   */
+  implicit def jfxBorder2sfx(v: jfxsl.Border) = new Border(v)
+
+  implicit def jfxBorderImage2sfx(v: jfxsl.BorderImage) = new BorderImage(v)
+
+  /**
    * $START$BDPN.html $BDPN$END
    *
    * @param v $JFX $BDPN
    * @return $SFX $BDPN
    */
   implicit def jfxBorderPane2sfx(v: jfxsl.BorderPane) = new BorderPane(v)
+
+  implicit def jfxBorderRepeat2sfx(v: jfxsl.BorderRepeat) = new BorderRepeat(v)
+
+  implicit def jfxBorderStroke2sfx(v: jfxsl.BorderStroke) = new BorderStroke(v)
+
+  implicit def jfxBorderStrokeStyle2sfx(v: jfxsl.BorderStrokeStyle) = new BorderStrokeStyle(v)
+
+  implicit def jfxBorderWidths2sfx(v: jfxsl.BorderWidths) = new BorderWidths(v)
 
   /**
    * $START$CLCT.html $CLCT$END
@@ -88,6 +127,8 @@ trait LayoutIncludes {
    * @return $SFX $CTBS
    */
   implicit def jfxConstraintsBase2sfx(v: jfxsl.ConstraintsBase) = new ConstraintsBase(v) {}
+
+  implicit def jfxCornerRadii2sfx(v: jfxsl.CornerRadii) = new CornerRadii(v) {}
 
   /**
    * $START$FLPN.html $FLPN$END

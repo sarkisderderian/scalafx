@@ -2,7 +2,7 @@ import scala.xml._
 import java.net.URL
 import SonatypeKeys._
 
-val scalafxVersion = "1.0.0-M8-SNAPSHOT"
+val scalafxVersion = "8.0.0-M4-SNAPSHOT"
 
 // ScalaFX project
 lazy val scalafx = Project(
@@ -48,26 +48,19 @@ resolvers += sonatypeNexusSnapshots
 lazy val scalafxSettings = Defaults.defaultSettings ++ Seq(
   organization := "org.scalafx",
   version := scalafxVersion,
-  crossScalaVersions := Seq("2.10.3", "2.11.0-RC1", "2.9.3"),
+  // TODO SFX8: At a moment only ScalaFX 2.10.2+ supports Java 8, due to some InvokeDynamic byte codes
+  crossScalaVersions := Seq("2.10.3", "2.11.0-RC1"),
   scalaVersion <<= crossScalaVersions { versions => versions.head },
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-Xcheckinit", "-encoding", "utf8"),
   scalacOptions in(Compile, doc) ++= Opts.doc.title("ScalaFX API"),
   scalacOptions in(Compile, doc) ++= Opts.doc.version(scalafxVersion),
   javacOptions ++= Seq(
-    "-target", "1.6",
-    "-source", "1.6",
+    "-target", "1.8",
+    "-source", "1.8",
     "-Xlint:deprecation"),
   libraryDependencies ++= Seq(
-    // A hack to make compilation and packaging work with Scala 2.9.3. SBT attempts to download
-    // test dependencies even when not used. Testing will not work in 2.9.3, but we are more
-    // interested right now to testing in 2.10 and 2.11 and only releasing in 2.9.3.
-    // scalatest % "test",
-    if(scalaVersion.value.startsWith("2.9."))
-      "org.scalatest" %% "scalatest" % "1.9.2" % "test"
-    else
-      scalatest % "test",
+    scalatest % "test",
     junit % "test"),
-  unmanagedLibs,
   manifestSetting,
   publishSetting,
   fork in Test := true,
@@ -79,26 +72,6 @@ lazy val scalafxSettings = Defaults.defaultSettings ++ Seq(
   },
   shellPrompt in ThisBuild := { state => "sbt:" + Project.extract(state).currentRef.project + "> " }
 ) ++ mavenCentralSettings
-
-// Location of JavaFX jar
-lazy val javaHome: File = {
-  val envPath = Option(System.getenv("JAVAFX_HOME")) match {
-    case Some(s) => s
-    case None => Option(System.getenv("JAVA_HOME")) match {
-      case Some(s) => s
-      case None => throw new RuntimeException("SBT Failure: neither JAVAFX_HOME nor " +
-        "JAVA_HOME environment variables have been defined!")
-    }
-  }
-  val dir = new File(envPath)
-  if (!dir.exists) {
-    throw new RuntimeException("SBT Failure: no such directory found: " + envPath)
-  }
-  println("**** detected Java/JDK Home is set to " + dir + "  ****")
-  dir
-}
-
-lazy val unmanagedLibs = unmanagedJars in Compile += Attributed.blank(javaHome / "jre/lib/jfxrt.jar")
 
 lazy val manifestSetting = packageOptions <+= (name, version, organization) map {
   (title, version, vendor) =>

@@ -84,6 +84,12 @@ class WebEngine(override val delegate: jfxsw.WebEngine = new jfxsw.WebEngine) ex
     onAlert() = v
   }
 
+  /** The event handler called when an error occurs. */
+  def onError = delegate.onErrorProperty
+  def onError_=(v: jfxe.EventHandler[jfxsw.WebErrorEvent]) {
+    onError() = v
+  }
+
   /**
    * JavaScript window resize handler property.
    */
@@ -128,6 +134,12 @@ class WebEngine(override val delegate: jfxsw.WebEngine = new jfxsw.WebEngine) ex
     javaScriptEnabled() = v
   }
 
+  /** Specifies the directory to be used by this WebEngine to store local user data. */
+  def userDataDirectory : ObjectProperty[java.io.File] = delegate.userDataDirectoryProperty
+  def userDataDirectory_=(v:java.io.File) {
+    ObjectProperty.fillProperty[java.io.File](this.userDataDirectory, v)
+  }
+
   /**
    * JavaScript enabled handler property.
    *
@@ -164,4 +176,8 @@ class WebEngine(override val delegate: jfxsw.WebEngine = new jfxsw.WebEngine) ex
     delegate.loadContent(content, contentType)
   }
 
+  def userAgent : StringProperty = delegate.userAgentProperty
+  def userAgent_=(v:String) {
+    userAgent() = v
+  }
 }
