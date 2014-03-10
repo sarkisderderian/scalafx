@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, ScalaFX Project
+ * Copyright (c) 2011-2014, ScalaFX Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,6 +26,7 @@
  */
 package scalafx.scene
 
+import javafx.{event => jfxe, scene => jfxs, collections => jfxc, util => jfxu, geometry => jfxg}
 import javafx.{collections => jfxc}
 import javafx.{event => jfxe, scene => jfxs}
 import javafx.{util => jfxu}
@@ -41,6 +42,7 @@ import scalafx.scene.input.Dragboard
 import scalafx.scene.input.Mnemonic
 import scalafx.scene.input.TransferMode
 import scalafx.scene.paint.Paint
+import scalafx.geometry.NodeOrientation
 
 object Scene {
   implicit def sfxScene2jfx(v: Scene) = v.delegate
@@ -82,14 +84,54 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
   def this(parent: Parent, width: Double, height: Double) = this(new jfxs.Scene(parent, width, height))
 
   /**
-   * Creates a Scene for a specific root Node with a specific size.
+   * Constructs a scene consisting of a root, with a dimension of width and height,
+   * and specifies whether a depth buffer is created for this scene.
    *
    * @param parent The root node of the scene graph
    * @param width The width of the scene
    * @param height The height of the scene
+   * @param depthBuffer The depth buffer flag
    */
   def this(parent: Parent, width: Double, height: Double, depthBuffer: Boolean) =
     this(new jfxs.Scene(parent, width, height, depthBuffer))
+
+  /**
+   * Creates a Scene with a `Group` as parent, with a dimension of width and height,
+   * and specifies whether a depth buffer is created for this scene.
+   *
+   * @param width The width of the scene
+   * @param height The height of the scene
+   * @param depthBuffer The depth buffer flag
+   */
+  def this(width: Double, height: Double, depthBuffer: Boolean) =
+    this(new jfxs.Scene(new jfxs.Group(), width, height, depthBuffer))
+
+  /**
+   * Constructs a scene consisting of a root, with a dimension of width and height,
+   * specifies whether a depth buffer is created for this scene and specifies
+   * the required scene anti-aliasing.
+   *
+   * @param parent The root node of the scene graph
+   * @param width The width of the scene
+   * @param height The height of the scene
+   * @param depthBuffer The depth buffer flag
+   * @param antiAliasing The required scene anti-aliasing.
+   */
+  def this(parent: Parent, width: Double, height: Double, depthBuffer: Boolean, antiAliasing: SceneAntialiasing) =
+    this(new jfxs.Scene(parent, width, height, depthBuffer, antiAliasing))
+
+  /**
+   * Creates a Scene with a `Group` as parent, with a dimension of width and height,
+   * specifies whether a depth buffer is created for this scene and specifies
+   * the required scene anti-aliasing.
+   *
+   * @param width The width of the scene
+   * @param height The height of the scene
+   * @param depthBuffer The depth buffer flag
+   * @param antiAliasing The required scene anti-aliasing.
+   */
+  def this(width: Double, height: Double, depthBuffer: Boolean, antiAliasing: SceneAntialiasing) =
+    this(new jfxs.Scene(new jfxs.Group(), width, height, depthBuffer, antiAliasing))
 
   /**
    * Creates a Scene for a specific root Node with a specific size and fill.
@@ -131,6 +173,11 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
   }
 
   /**
+   * Returns scene's antialiasing setting.
+   */
+  def antialiasing: SceneAntialiasing = delegate.getAntiAliasing()
+
+  /**
    * Returns Content's Node children from this Scene's `root`.
    */
   def content: jfxc.ObservableList[jfxs.Node] = getChildren
@@ -170,6 +217,9 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
     cursor() = v
   }
 
+  /** The effective node orientation of a scene resolves the inheritance of node orientation, returning either left-to-right or right-to-left.  */
+  def effectiveNodeOrientation: ReadOnlyObjectProperty[jfxg.NodeOrientation] = delegate.effectiveNodeOrientationProperty
+
   /**
    * Specifies the event dispatcher for this scene.
    */
@@ -195,6 +245,11 @@ class Scene(override val delegate: jfxs.Scene = new jfxs.Scene(new jfxs.Group())
    * The width of this Scene
    */
   def width: ReadOnlyDoubleProperty = delegate.widthProperty
+
+  def nodeOrientation: ObjectProperty[jfxg.NodeOrientation] = delegate.nodeOrientationProperty
+  def nodeOrientation_=(v: NodeOrientation) {
+    ObjectProperty.fillProperty[jfxg.NodeOrientation](this.nodeOrientation, v)
+  }
 
   /**
    * Defines a function to be called when a mouse button has been clicked (pressed and released) on this `Scene`.
