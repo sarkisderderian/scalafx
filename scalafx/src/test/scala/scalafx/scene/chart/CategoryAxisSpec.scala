@@ -30,7 +30,7 @@ import javafx.scene.{ chart => jfxsc }
 import scalafx.Includes._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * CategoryAxis Spec tests.
@@ -39,4 +39,6 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class CategoryAxisSpec
-  extends AbstractSFXDelegateSpec[jfxsc.CategoryAxis, CategoryAxis, jfxsc.CategoryAxisBuilder](classOf[jfxsc.CategoryAxis], classOf[CategoryAxis], classOf[jfxsc.CategoryAxisBuilder])
+  extends SimpleSFXDelegateSpec[jfxsc.CategoryAxis, CategoryAxis](
+    classOf[jfxsc.CategoryAxis], classOf[CategoryAxis])
+  with RunOnApplicationThread

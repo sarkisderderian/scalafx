@@ -31,7 +31,7 @@ import org.scalatest.junit.JUnitRunner
 
 import javafx.scene.control.{ cell => jfxscc }
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * TextFieldTreeCell Spec tests.
@@ -40,4 +40,6 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class TextFieldTreeCellSpec[T]
-  extends AbstractSFXDelegateSpec[jfxscc.TextFieldTreeCell[T], TextFieldTreeCell[T], jfxscc.TextFieldTreeCellBuilder[T, _]](classOf[jfxscc.TextFieldTreeCell[T]], classOf[TextFieldTreeCell[T]], classOf[jfxscc.TextFieldTreeCellBuilder[T, _]])
+  extends SimpleSFXDelegateSpec[jfxscc.TextFieldTreeCell[T], TextFieldTreeCell[T]](
+    classOf[jfxscc.TextFieldTreeCell[T]], classOf[TextFieldTreeCell[T]])
+  with RunOnApplicationThread

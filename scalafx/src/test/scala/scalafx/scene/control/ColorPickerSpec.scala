@@ -31,7 +31,7 @@ import org.scalatest.junit.JUnitRunner
 
 import javafx.scene.{control => jfxsc}
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * ColorPicker Spec tests.
@@ -40,4 +40,5 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class ColorPickerSpec
-  extends AbstractSFXDelegateSpec[jfxsc.ColorPicker, ColorPicker, jfxsc.ColorPickerBuilder[_]](classOf[jfxsc.ColorPicker], classOf[ColorPicker], classOf[jfxsc.ColorPickerBuilder[_]])
+  extends SimpleSFXDelegateSpec[jfxsc.ColorPicker, ColorPicker](classOf[jfxsc.ColorPicker], classOf[ColorPicker])
+  with RunOnApplicationThread
