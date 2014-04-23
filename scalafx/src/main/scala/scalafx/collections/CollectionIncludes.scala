@@ -30,6 +30,11 @@ import scala.collection.JavaConversions.mapAsScalaMap
 
 import javafx.{ collections => jfxc }
 
+/*
+ * Enable implicit conversions, to avoid feature warnings during compilation.
+ */
+import scala.language.implicitConversions
+
 object CollectionIncludes extends CollectionIncludes
 
 /**
@@ -38,7 +43,7 @@ object CollectionIncludes extends CollectionIncludes
  * Classes to their ScalaFX counterparts.
  */
 trait CollectionIncludes {
-  
+
   /**
    * Converts a [[http://docs.oracle.com/javafx/2/api/javafx/collections/ObservableList.html `ObservableList`]]
    * to a [[scalafx.collections.ObservableBuffer]].
@@ -73,4 +78,26 @@ trait CollectionIncludes {
    * @return ScalaFX ObservableSet
    */
   implicit def jfxObservableSet2sfxObservableSet[T](os: jfxc.ObservableSet[T]): ObservableHashSet[T] = new ObservableHashSet[T](os)
+
+  // TODO: Enter link when JavaFX 8 API Docs are available on-line.
+  /**
+   * Converts a JavaFX `ObservableFloatArray` to a ScalaFX [[scalafx.collections.ObservableFloatArray]].
+   * 
+   * @param ofa JavaFX ObservableFloatArray
+   * @return ScalaFX ObservableFloatArray
+   */
+  implicit def jfxObservableFloatArray2sfxObservableFloatArray (ofa:
+    jfxc.ObservableFloatArray): ObservableFloatArray =
+      new ObservableFloatArray (ofa)
+
+  // TODO: Enter link when JavaFX 8 API Docs are available on-line.
+  /**
+   * Converts a JavaFX `ObservableIntegerArray` to a ScalaFX [[scalafx.collections.ObservableIntegerArray]].
+   * 
+   * @param oia JavaFX ObservableIntegerArray
+   * @return ScalaFX ObservableIntegerArray
+   */
+  implicit def jfxObservableIntegerArray2sfxObservableIntegerArray (oia:
+    jfxc.ObservableIntegerArray): ObservableIntegerArray =
+      new ObservableIntegerArray (oia)
 }

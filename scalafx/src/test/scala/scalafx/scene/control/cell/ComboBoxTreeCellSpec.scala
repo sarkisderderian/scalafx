@@ -31,7 +31,7 @@ import org.scalatest.junit.JUnitRunner
 
 import javafx.scene.control.{ cell => jfxscc }
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.{RunOnApplicationThread, SimpleSFXDelegateSpec}
 
 /**
  * ComboBoxTreeCell Spec tests.
@@ -40,4 +40,6 @@ import scalafx.testutil.AbstractSFXDelegateSpec
  */
 @RunWith(classOf[JUnitRunner])
 class ComboBoxTreeCellSpec[T]
-  extends AbstractSFXDelegateSpec[jfxscc.ComboBoxTreeCell[T], ComboBoxTreeCell[T], jfxscc.ComboBoxTreeCellBuilder[T, _]](classOf[jfxscc.ComboBoxTreeCell[T]], classOf[ComboBoxTreeCell[T]], classOf[jfxscc.ComboBoxTreeCellBuilder[T, _]])
+  extends SimpleSFXDelegateSpec[jfxscc.ComboBoxTreeCell[T], ComboBoxTreeCell[T]](
+    classOf[jfxscc.ComboBoxTreeCell[T]], classOf[ComboBoxTreeCell[T]])
+  with RunOnApplicationThread

@@ -28,7 +28,7 @@ package scalafx.geometry
 
 import javafx.{ geometry => jfxg }
 import scalafx.Includes._
-import scalafx.testutil.AbstractSFXDelegateSpec
+import scalafx.testutil.SimpleSFXDelegateSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
@@ -38,10 +38,16 @@ import org.scalatest.junit.JUnitRunner
  */
 @RunWith(classOf[JUnitRunner])
 class Point3DSpec
-  extends AbstractSFXDelegateSpec[jfxg.Point3D, Point3D, jfxg.Point3DBuilder[_]](classOf[jfxg.Point3D], classOf[Point3D], classOf[jfxg.Point3DBuilder[_]]) {
+  extends SimpleSFXDelegateSpec[jfxg.Point3D, Point3D](classOf[jfxg.Point3D], classOf[Point3D]) {
 
   override protected def getScalaClassInstance = new Point3D(0, 0, 0)
 
   override protected def getJavaClassInstance = new jfxg.Point3D(0, 0, 0)
 
+  it should "report all zero cooordinates as Point3D.Zero" in {
+    val zero = Point3D.Zero
+    assert (zero.x === 0.0)
+    assert (zero.y === 0.0)
+    assert (zero.z === 0.0)
+  }
 }
